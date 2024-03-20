@@ -40,9 +40,21 @@ jobs:
       - name: Build
         run: ng build
 
-      - name: Deploy
-        if: github.event_name == 'push'
-        run: echo Deploying
+      ## secrets.ftp_password
+      ## target-server: example.com
+      ## remote-user: username
+      ## private-ssh-key: ${{ secrets.SSH_KEY }}
+      ## destination-path: ~/destinationFolder/
+
+      - name: Web Deploy
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: hipotesis.org.mx
+          username: hipotesi
+          password: t6A86zwHV-+h1I
+          local-dir: ./dist/
+          server-dir: public_html/math
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
