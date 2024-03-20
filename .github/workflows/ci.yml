@@ -31,6 +31,9 @@ jobs:
           node-version: lts/*
           cache: "npm"
 
+      - name: Angular
+        run: npm install -g @angular/cli@16.2
+
       - name: Install
         run: npm install
 
