@@ -24,7 +24,7 @@ jobs:
           cache: "npm"
 
       - name: Angular installation
-        run: npm install --global @angular/cli@16.2
+       run: npm install --global @angular/cli@16.2
 
       - name: Dependencies installation
         run: npm install
@@ -40,5 +40,5 @@ jobs:
           username: ${{secrets.FTP_USER}}
           password: ${{secrets.FTP_PASSWORD}}
           local-dir: ./dist/
-          server-dir: public_html/math
+          server-dir: public_html/math/
           dangerous-clean-slate: true
