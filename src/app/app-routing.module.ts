@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/graphs',
+    redirectTo: '/bases',
     pathMatch: 'full'
   },
   {
@@ -33,7 +33,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/graphs'
+    redirectTo: '/bases'
   }
 ];
 
