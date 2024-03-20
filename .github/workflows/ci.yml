@@ -31,14 +31,14 @@ jobs:
           node-version: lts/*
           cache: "npm"
 
-      - name: Angular
-        run: npm install -g @angular/cli@16.2
-
       - name: Install
         run: npm install
 
       - name: Build
-        run: npm run build
+        run: ng build
+
+      - name: Test
+        run: ng test
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
