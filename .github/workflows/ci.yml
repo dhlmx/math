@@ -23,8 +23,8 @@ jobs:
           node-version: lts/*
           cache: "npm"
 
-      # - name: Angular installation
-      #  run: npm install --global @angular/cli@16.2
+      - name: Angular installation
+        run: npm install --global @angular/cli@16.2
 
       - name: Dependencies installation
         run: npm install
