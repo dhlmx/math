@@ -9,21 +9,13 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Setup
         uses: actions/setup-node@v4
@@ -31,8 +23,8 @@ jobs:
           node-version: lts/*
           cache: "npm"
 
-      - name: Angular installation
-        run: npm install --global @angular/cli@16.2
+      # - name: Angular installation
+      #  run: npm install --global @angular/cli@16.2
 
       - name: Dependencies installation
         run: npm install
@@ -40,24 +32,13 @@ jobs:
       - name: Build
         run: ng build
 
-      ## secrets.ftp_password
-      ## target-server: example.com
-      ## remote-user: username
-      ## private-ssh-key: ${{ secrets.SSH_KEY }}
-      ## destination-path: ~/destinationFolder/
-
       - name: Web Deploy
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: hipotesis.org.mx
-          username: hipotesi
-          password: t6A86zwHV-+h1I
+          username: ${{secrets.FTP_USER}}
+          password: ${{secrets.FTP_PASSWORD}}
           local-dir: ./dist/
           server-dir: public_html/math/
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          dangerous-clean-slate:
