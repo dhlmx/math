@@ -1,0 +1,77 @@
+<p>Color Graphs!</p>
+<!-- Data -->
+<table>
+  <caption>
+    <h4>Guests</h4>
+  </caption>
+  <thead>
+    <tr>
+      <th>Order</th>
+      <th>Alias</th>
+      <th>Name</th>
+      <th>Black List</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let i of graph.apexes">
+      <td>{{ i.id }}</td>
+      <td>{{ i.alias }}</td>
+      <td>{{ i.name }}</td>
+      <td>
+        {{ i.blackList | set }}
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <caption>
+    <h4>Tables</h4>
+  </caption>
+  <thead>
+    <tr>
+      <th>Order</th>
+      <th>Color</th>
+      <th>Guests</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let color of graph.colors; let j = index;">
+      <td>{{ color.id }}</td>
+      <td>{{ color.name }}</td>
+      <td>
+        {{ mapColorApex(j) | set }}
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- NODES
+[
+    {
+      id: 'first',
+      label: 'A'
+    }, {
+      id: 'second',
+      label: 'B'
+    }, {
+      id: 'third',
+      label: 'C'
+    }
+  ]
+-->
+
+<!-- EDGES
+[
+    {
+      id: 'a',
+      source: 'first',
+    target: 'second',
+      label: 'is parent of'
+    }, {
+      id: 'b',
+      source: 'first',
+      target: 'third',
+      label: 'custom label'
+    }
+  ]-->

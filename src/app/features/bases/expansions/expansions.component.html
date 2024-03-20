@@ -1,0 +1,8 @@
+<p>Expansions</p>
+
+<ng-container *ngIf="expansions.length > 0">
+  <p *ngFor="let e of expansions">
+    n:&nbsp;{{ e.n }},&nbsp;base:&nbsp;{{ e.base }},&nbsp;expansion:&nbsp;{{e.expOfn | expansion }}
+
+  </p>
+</ng-container>

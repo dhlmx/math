@@ -1,0 +1,31 @@
+<p>Integers!</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Intger</th>
+      <th>IsEven</th>
+      <th>IsOdd</th>
+      <th>Divisors</th>
+      <th>IsDivisorOf(10)</th>
+      <th>IsMultipleOf(200)</th>
+      <th>MaximalCommonDivisorOf(8)</th>
+      <th>isRelativePrimeOf(8)</th>
+      <th>isPrime</th>
+      </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let i of integers; let index = index;">
+      <td>{{ i.value }}</td>
+      <td>{{ i.isEven }}</td>
+      <td>{{ i.isOdd }}</td>
+      <td>{{ i.divisors }}</td>
+      <td>{{ i.isDivisorOf(10) }}</td>
+      <td>{{ i.isMultipleOf(200) }}</td>
+      <td>{{ i.maximalCommonDivisorOf(8) }}</td>
+      <td>{{ i.isRelativePrimeOf(8) }}</td>
+      <td>{{ i.isPrime }}</td>
+    </tr>
+  </tbody>
+</table>
+

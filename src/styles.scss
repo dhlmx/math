@@ -1,1 +1,35 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  background-color: black;
+  color: whitesmoke;
+}
+
+a {
+  display: inline-block;
+  margin: 0 4px;
+  padding: 4px;
+  background-color: transparent;
+  text-decoration: none;
+  color: whitesmoke;
+}
+
+a:hover {
+  background-color: maroon;
+  color: whitesmoke;
+}
+
+.menu {
+  display: block;
+  margin: 0;
+  border: thin whitesmoke solid;
+  padding: 0 8px;
+  background-color: darkred;
+  color: whitesmoke;
+
+  & .submenu {
+    display: inline-block;
+    margin: 0;
+    padding: 0 4px;
+    background-color: transparent;
+    color: whitesmoke;
+  }
+}

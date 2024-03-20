@@ -1,0 +1,242 @@
+<h4>Matemáticas Naturales</h4>
+<p>Words (Variations) of 3 from 2 Chars: {{ wordsOfThreeFromFourChars.calculation }}<br /><br />
+  <ng-container *ngFor="let combination of wordsOfThreeFromFourChars.list(false)">
+    <span>{{ combination }}</span><br />
+  </ng-container>
+</p>
+
+<p>Numbers of 3 from 10 Digits: {{ combinationOfThreeFromTenDigits.calculation }}<br /><br />
+  <!-- <ng-container *ngFor="let combination of combinationOfThreeFromTenDigits.list(true)">
+    <span>{{ combination }}</span><br />
+  </ng-container> -->
+</p>
+
+<p>Plates of two chars and 1 digit: {{ variationOfPlates.calculation }}<br /><br />
+  <!-- <ng-container *ngFor="let variation of variationOfPlates.list(true)">
+    <span>{{ variation }}</span><br />
+  </ng-container> -->
+</p>
+
+<p>President and vicepresident of four persons: {{ combinationOfPresidenAndVicepresidentFromFourPersons.calculation }}<br /><br />
+  <ng-container *ngFor="let combination of combinationOfPresidenAndVicepresidentFromFourPersons.list(true)">
+    <span>{{ combination }}</span><br />
+  </ng-container>
+</p>
+
+<p>Combinations of 5 Chairs: {{ combinationOfFiveChairs.calculation }}<br /><br />
+  <ng-container *ngFor="let combination of combinationOfFiveChairs.list(true)">
+    <span>{{ combination }}</span><br />
+  </ng-container>
+</p>
+
+<p>Combination of 3 Digits: {{ combinationsOfThreeDigits.calculation }}<br /><br />
+  <ng-container *ngFor="let permutation of combinationsOfThreeDigits.list(true)">
+    <span>{{ permutation }}</span><br />
+  </ng-container>
+</p>
+
+<p>Selection of 2 of 4 Persons: {{ selectionOfTwoFromFourPersons.calculation }}<br /><br />
+  <ng-container *ngFor="let combination of selectionOfTwoFromFourPersons.list(true)">
+    <span>{{ combination }}</span><br />
+  </ng-container>
+</p>
+
+<p>Permutations of 4 Digits: {{ permutationsOfFourDigits.calculation }}<br /><br />
+  <ng-container *ngFor="let permutation of permutationsOfFourDigits.list(true)">
+    <span>{{ permutation }}</span><br />
+  </ng-container>
+</p>
+
+
+
+
+
+
+
+
+
+
+<p>Variation of 2 from 4 Chars: {{ variationOfTwoOfFourChars.calculation }}<br /><br />
+  <ng-container *ngFor="let combination of variationOfTwoOfFourChars.list(false)">
+    <span>{{ combination }}</span><br />
+  </ng-container>
+</p>
+
+<p>Combination of 2 from 4 Chars: {{ combinationOfTwoOfFourChars.calculation }}<br /><br />
+  <ng-container *ngFor="let combination of combinationOfTwoOfFourChars.list(true)">
+    <span>{{ combination }}</span><br />
+  </ng-container>
+</p>
+
+<p>Variation of 3 from 4 Chars: {{ variationOfThreeOfFourChars.calculation }}<br /><br />
+  <ng-container *ngFor="let variation of variationOfThreeOfFourChars.list(true)">
+    <span>{{ variation }}</span><br />
+  </ng-container>
+</p>
+
+<p>Variation of 2 from 10 Vapors: {{ combinationOfTwoOfTenVapors.calculation }}<br /><br />
+  <ng-container *ngFor="let combination of combinationOfTwoOfTenVapors.list(true)">
+    <span>{{ combination }}</span><br />
+  </ng-container>
+</p>
+
+<p>Variation of 3 from 4 Hotels: {{ combinationOfThreeOfFourHotels.calculation }}<br /><br />
+  <ng-container *ngFor="let combination of combinationOfThreeOfFourHotels.list(true)">
+    <span>{{ combination }}</span><br />
+  </ng-container>
+</p>
+
+<p>Variation of 4 from 6 Chairs: {{ combinationOfFourFromSixChairs.calculation }}<br /><br />
+  <ng-container *ngFor="let combination of combinationOfFourFromSixChairs.list(true)">
+    <span>{{ combination }}</span><br />
+  </ng-container>
+</p>
+
+<p>Variation of 6 from 9 Digits: {{ combinationOfSixFromNineDigits.calculation }}<br /><br />
+  <!-- <ng-container *ngFor="let combination of combinationOfSixFromNineDigits.list(true)">
+    <span>{{ combination }}</span><br />
+  </ng-container> -->
+</p>
+
+<p>Combination Group of 5 from 12 Books: {{ groupsOfOneAndFourFromTwelveBooks.calculation }}<br /><br />
+  <ng-container *ngFor="let combination of groupsOfOneAndFourFromTwelveBooks.combinations">
+    <p>calculation: {{ combination.calculation }}</p>
+    <ng-container *ngFor="let c of combination.list(true)">
+      <span>{{ c }}</span><br />
+    </ng-container>
+  </ng-container>
+</p>
+
+
+<p>Variation of 11 from 14 Mens: {{ combinationOfElevenFromFourteenMens.calculation }}<br /><br />
+  <ng-container *ngFor="let combination of combinationOfElevenFromFourteenMens.list(true)">
+    <span>{{ combination }}</span><br />
+  </ng-container>
+</p>
+
+<p>Combination Group of 5 from 15 Soldats: {{ groupsOfFiveFromFiveteenMens.calculation }}<br /><br />
+  <ng-container *ngFor="let combination of groupsOfFiveFromFiveteenMens.combinations">
+    <p>calculation: {{ combination.calculation }}</p>
+    <!-- <ng-container *ngFor="let c of combination.list(true)">
+      <span>{{ c }}</span><br />
+    </ng-container> -->
+  </ng-container>
+</p>
+
+<p>Combination of Britishes And Americans: {{ combinationOfBritishesAndAmericans.calculation }}<br /><br />
+  <ng-container *ngFor="let combination of combinationOfBritishesAndAmericans.combinations">
+    <p>Calculation: {{ combination.calculation }}</p>
+    <ng-container *ngFor="let c of combination.list(true)">
+      <span>{{ c }}</span><br />
+    </ng-container>
+  </ng-container>
+</p>
+
+<p>Combination of Britishes And Americans II: {{ combinationOfBritishesAndAmericansII.calculation }}<br /><br />
+  <ng-container *ngFor="let combinations of combinationOfBritishesAndAmericansII.groups">
+    <ng-container *ngFor="let combination of combinations">
+      <p>Calculation: {{ combination.calculation }}</p>
+      <ng-container *ngFor="let c of combination.list(true)">
+        <span>{{ c }}</span><br />
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</p>
+
+<!--
+  <p>Combination of Numbers: {{ combinationOfNumbers.calculation }}<br /><br />
+  <ng-container *ngFor="let combination of combinationOfNumbers.list(true)">
+    <span>{{ combination }}</span><br />
+  </ng-container>
+</p>
+
+<p>Combination of Plates: {{ combinationOfPlates.calculation }}<br /><br />
+  <ng-container *ngFor="let combination of combinationOfPlates.list(false)">
+    <span>{{ combination }}</span><br />
+  </ng-container>
+</p>
+
+
+<p>Permutations of 2 Chars: {{ permutationOfTwoChars.calculation }}<br /><br />
+  <ng-container *ngFor="let permutation of permutationOfTwoChars.list(true)">
+    <span>{{ permutation }}</span><br />
+  </ng-container>
+</p>
+
+
+
+
+<p>Permutations of 2 of 8 Digits: {{ permutationOfTwoOfOctalDigits.calculation }}<br /><br />
+  <ng-container *ngFor="let permutation of permutationOfTwoOfOctalDigits.list(true)">
+    <span>{{ permutation }}</span><br />
+  </ng-container>
+</p>
+
+<p>Permutations of 6 of 8 Digits: {{ permutationOfSixOfOctalDigits.calculation }}<br /><br />
+  <ng-container *ngFor="let permutation of permutationOfSixOfOctalDigits.list(true)">
+    <span>{{ permutation }}</span><br />
+  </ng-container>
+</p>
+
+<p>Permutations of 6 of 6 Digits: {{ permutationOfSixOfSixChars.calculation }}<br /><br />
+  <ng-container *ngFor="let permutation of permutationOfSixOfSixChars.list(true)">
+    <span>{{ permutation }}</span><br />
+  </ng-container>
+</p>
+
+<p>Permutations of 1 of 7 Chars: {{ permutationOfOneOfSevenChars.calculation }}<br /><br />
+  <ng-container *ngFor="let permutation of permutationOfOneOfSevenChars.list(true)">
+    <span>{{ permutation }}</span><br />
+  </ng-container>
+</p>
+
+<p>Permutations of 3 of 5 Chars: {{ permutationOfThreeOfFiveChars.calculation }}<br /><br />
+  <ng-container *ngFor="let permutation of permutationOfThreeOfFiveChars.list(true)">
+    <span>{{ permutation }}</span><br />
+  </ng-container>
+</p>
+
+<p>Permutations of 3 of 12 Chars: {{ permutationOfThreeOfTwelveChars.calculation }}<br /><br />
+  <ng-container *ngFor="let permutation of permutationOfThreeOfTwelveChars.list(true)">
+    <span>{{ permutation }}</span><br />
+  </ng-container>
+</p>
+
+<p>Permutations of 3 of 9 Chars: {{ permutationOfThreeOfNineChars.calculation }}<br /><br />
+  <ng-container *ngFor="let permutation of permutationOfThreeOfNineChars.list(true)">
+    <span>{{ permutation }}</span><br />
+  </ng-container>
+</p>
+
+<p>Permutations of 3 of 6 Chars: {{ permutationOfThreeOfSixChars.calculation }}<br /><br />
+  <ng-container *ngFor="let permutation of permutationOfThreeOfSixChars.list(true)">
+    <span>{{ permutation }}</span><br />
+  </ng-container>
+</p>
+
+<p>Permutations of 3 of 3 Chars: {{ permutationOfThreeOfThreeChars.calculation }}<br /><br />
+  <ng-container *ngFor="let permutation of permutationOfThreeOfThreeChars.list(true)">
+    <span>{{ permutation }}</span><br />
+  </ng-container>
+</p>
+
+<p>Permutations of 4 of 12 Chars: {{ permutationOfFourOfTwelveChars.calculation }}<br /><br />
+  <ng-container *ngFor="let permutation of permutationOfFourOfTwelveChars.list(true)">
+    <span>{{ permutation }}</span><br />
+  </ng-container>
+</p>
+
+<p>Permutations of 1s and 4s: {{ permutationOfOneAndFours.calculation }}<br /><br />
+  <ng-container *ngFor="let permutation of permutationOfOneAndFours.list(true)">
+    <span>{{ permutation }}</span><br />
+  </ng-container>
+</p>
+
+<p>Permutations Group of 12 Chars: {{ permutationsOfTwelveChars.calculation }}<br /><br />
+  <ng-container *ngFor="let permutation of permutationsOfTwelveChars.permutations">
+    <p>calculation: {{permutation.calculation}}</p>
+    <ng-container *ngFor="let p of permutation.list(true)">
+      <span>{{ p }}</span><br />
+    </ng-container>
+  </ng-container>
+</p> -->
