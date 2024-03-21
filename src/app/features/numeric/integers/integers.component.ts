@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Integer } from '../../../core/models/integer';
 import { Series } from '../../../core/models/series';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-integers',
@@ -9,8 +10,19 @@ import { Series } from '../../../core/models/series';
 })
 export class IntegersComponent implements OnInit {
 
+  integer = new Integer();
   integers: Integer[] = [];
   series = new Series();
+
+  controls = {
+    number: new FormControl(0, [Validators.required, Validators.min(1)]),
+    multipleOf: new FormControl(0),
+    divisorOf: new FormControl(0)
+  };
+
+  search = new FormControl('');
+
+  form = new FormGroup({ ...this.controls });
 
   ngOnInit(): void {
 
@@ -41,5 +53,15 @@ export class IntegersComponent implements OnInit {
     ]);
 
     //  console.info('serie', serie.items, serie.hasPrimes, serie.primes, serie.hasRelativePrimes, serie.relativePrimes);
+  }
+
+  onClickCalculate = (): void => {
+    if (this.form.value.number) {
+      this.integer = new Integer(this.form.value.number);
+    } else {
+      this.integer = new Integer();
+    }
+
+    this.form.reset();
   }
 }

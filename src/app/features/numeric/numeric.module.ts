@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { NumericRoutingModule } from './numeric-routing.module';
 import { IntegersComponent } from './integers/integers.component';
+import { CoreModule } from 'src/app/core/core.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { IntegersComponent } from './integers/integers.component';
   ],
   imports: [
     CommonModule,
-    NumericRoutingModule
+    NumericRoutingModule,
+    CoreModule
   ]
 })
 export class NumericModule { }

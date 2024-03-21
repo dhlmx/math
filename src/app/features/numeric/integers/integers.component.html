@@ -1,4 +1,133 @@
+<p-panel>
+  <ng-template pTemplate="header">
+    <div><span class="pi pi-fw pi-calculator"></span>&nbsp;Number Theory</div>
+  </ng-template>
+
+  <ng-template pTemplate="icons">
+    <div>
+      <!--
+      <button type="button" pButton (click)="create()" title="Create expression" class="p-button-outlined p-button-info">
+        <em class="pi pi-plus-circle"></em>
+      </button>
+      -->
+      <button type="button" pButton title="Print list of expressions" class="p-button-outlined p-button-success">
+        <em class="pi pi-print"></em>
+      </button>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="body">
+    <form form="form">
+      <div class="grid bg-gray-900">
+        <div class="col-12 md:col-4">
+          <label for="number">&nbsp;Number (Required)</label>
+          <input type="number" inputId="number" placeholder="Number" [formControl]="controls.number" pInputText class="w-full" />
+        </div>
+        <div class="col-12 md:col-4">
+          <label for="multipleOf">&nbsp;Multiple of</label>
+          <input type="number" inputId="multipleOf" placeholder="Is multiple of" [formControl]="controls.multipleOf" pInputText class="w-full" />
+        </div>
+        <div class="col-12 md:col-4">
+          <label for="divisorOf">&nbsp;Divisor of</label>
+          <input type="number" inputId="divisorOf" placeholder="Is divisor Of" [formControl]="controls.divisorOf" pInputText class="w-full" />
+        </div>
+      </div>
+    </form>
+
+    <ng-container *ngIf="integer.value > 0">
+      <div class="grid bg-gray-900">
+
+        <div class="col-12">
+          <p-table #dt
+            [value]="[integer]"
+            dataKey="id"
+            [paginator]="false"
+            [rows]="50"
+            [showCurrentPageReport]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} expressions"
+            [rowsPerPageOptions]="[10, 25, 50, 100]"
+            [filterDelay]="100"
+            [globalFilterFields]="[]"
+            styleClass="p-datatable-gridlines p-datatable-striped">
+
+            <ng-template pTemplate="caption">
+              <div class="table-header">
+                <div class="grid">
+                  <div class="col-12 md:col-4"><span class="pi pi-sort-alpha-down"></span>&nbsp;Number Theory</div>
+                  <div class="col-12 md:col-8 text-right">
+                    <span class="p-input-icon-right ml-auto">
+                      <i class="pi pi-search"></i>
+                      <input type="text" pInputText
+                        [formControl]="search"
+                        (input)="dt.filterGlobal(search.value, 'contains')"
+                        placeholder="Global search" />
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+
+            <ng-template pTemplate="header">
+              <tr>
+                <th id="value" pSortableColumn="value" class="width-10"><p-sortIcon field="value"></p-sortIcon>&nbsp;Number</th>
+                <th id="attributes" pSortableColumn="attributes" class="width-10"><p-sortIcon field="attributes"></p-sortIcon>&nbsp;Attributes</th>
+                <th id="divisors" class="width-80 text-center">Divisors</th>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-item>
+              <tr style="font-size: small; vertical-align: top;">
+                <td>
+                  <p>{{integer.value}}</p>
+                </td>
+                <td class="text-center">
+                  <ng-container *ngIf="integer.isEven; else isOdd">
+                    <p-tag severity="success" value="Even"><span class="pi pi-check-square text-right">&nbsp;</span></p-tag>
+                  </ng-container>
+                  <ng-template #isOdd>
+                    <p-tag severity="success" value="Odd"><span class="pi pi-check-square text-right">&nbsp;</span></p-tag>
+                  </ng-template>
+                  <ng-container *ngIf="integer.isPrime">
+                    <br />
+                    <p-tag severity="primary" value="Prime"><span class="pi pi-check-square text-right">&nbsp;</span></p-tag>
+                  </ng-container>
+                </td>
+                <td>
+                  <p *ngFor="let divisor of integer.divisors" >
+                    {{divisor}}
+                  </p>
+                </td>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                  <td colspan="5">Expressions not found!</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+    </ng-container>
+
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <div class="grid">
+      <div class="col-12 text-right">
+        <button type="button" label="Calculate" pButton title="Calculate" [disabled]="form.invalid" (click)="onClickCalculate()" class="p-button-outlined p-button-info"></button>
+      </div>
+    </div>
+  </ng-template>
+</p-panel>
+
 <p>Number Theory</p>
+
+<form>
+  <div>
+
+  </div>
+</form>
 
 <table>
   <thead>
