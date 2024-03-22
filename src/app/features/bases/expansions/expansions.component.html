@@ -1,8 +1,50 @@
-<p>Expansions</p>
+<app-message-modal
+  [visible]="appService.process.processingMode"
+  [message]="appService.process.message">
+</app-message-modal>
 
-<ng-container *ngIf="expansions.length > 0">
-  <p *ngFor="let e of expansions">
-    n:&nbsp;{{ e.n }},&nbsp;base:&nbsp;{{ e.base }},&nbsp;expansion:&nbsp;{{e.expOfn | expansion }}
+<p-panel>
+  <ng-template pTemplate="header">
+    <div><span class="pi pi-share-alt"></span>&nbsp;Expansions</div>
+  </ng-template>
 
-  </p>
-</ng-container>
+  <ng-template pTemplate="icons">
+    <div>
+      <!--
+      <button type="button" pButton (click)="create()" title="Create expression" class="p-button-outlined p-button-info">
+        <em class="pi pi-plus-circle"></em>
+      </button>
+      -->
+      <button type="button" pButton title="Print list of expressions" class="p-button-outlined p-button-success">
+        <em class="pi pi-print"></em>
+      </button>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="body">
+    <form form="form">
+      <div class="grid bg-gray-900">
+        <div class="col-12 md:col-2">
+          <label for="number"><span class="pi pi-sort-numeric-up-alt"></span>&nbsp;Number*</label>
+          <input type="number" inputId="number" placeholder="Number" [formControl]="controls.number" pInputText class="w-full" />
+        </div>
+        <div class="col-12 md:col-2">
+          <label for="base"><span class="pi pi-sort-numeric-up-alt"></span>&nbsp;Base*</label>
+          <input type="number" inputId="base" placeholder="Base" [formControl]="controls.base" pInputText class="w-full" />
+        </div>
+        <div class="col-12 md:col-8">
+          <label for="expansion"><span class="pi pi-share-alt"></span>&nbsp;Expansion</label>
+          <input type="text" inputId="expansion" placeholder="Expansion" [formControl]="controls.expansion" pInputText class="w-full" />
+        </div>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <div class="grid">
+      <div class="col-12 text-center">
+        <button type="button" label="Calculate" pButton title="Calculate" [disabled]="form.invalid" (click)="onClickCalculate()" class="p-button-outlined p-button-info"></button>
+      </div>
+    </div>
+  </ng-template>
+</p-panel>

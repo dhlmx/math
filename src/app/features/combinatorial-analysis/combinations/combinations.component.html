@@ -1,3 +1,8 @@
+<app-message-modal
+  [visible]="appService.process.processingMode"
+  [message]="appService.process.message">
+</app-message-modal>
+
 <h4>Matemáticas Naturales</h4>
 <p>Words (Variations) of 3 from 2 Chars: {{ wordsOfThreeFromFourChars.calculation }}<br /><br />
   <ng-container *ngFor="let combination of wordsOfThreeFromFourChars.list(false)">

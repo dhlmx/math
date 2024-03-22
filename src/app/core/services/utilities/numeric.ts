@@ -1,3 +1,5 @@
+import { Observable, of } from "rxjs";
+
 export const complement = (u: number[], a: number[]): number[] => {
   const x: number[] = [];
 
@@ -11,10 +13,28 @@ export const complement = (u: number[], a: number[]): number[] => {
 },
 
 divisors = (a: number): number[] => {
+  const divs: number[] = [];
+
+  if (a < 1) {
+    return divs;
+  }
+
+  divs.push(1);
+
+  for (let i = 2; i <= a; i++) {
+    if (a % i === 0) {
+      divs.push(i);
+    }
+  }
+
+  return divs;
+},
+
+divisorsAsync = (a: number): Observable<number[]> => {
     const divs: number[] = [];
 
     if (a < 1) {
-      return divs;
+      return of(divs);
     }
 
     divs.push(1);
@@ -25,7 +45,7 @@ divisors = (a: number): number[] => {
       }
     }
 
-    return divs;
+    return of(divs);
 },
 
 expansion = (x: number, base: number): number[] => {
@@ -82,17 +102,20 @@ isOdd = (x: number): boolean => {
   return x % 2 !== 0;
 },
 
-isPrime = (x: number): boolean => {
-  const divs = divisors(x);
-  return divs.length === 2;
+isPrime = (x: number|number[]): boolean => {
+  if (typeof x === 'number') {
+    return divisors(x).length === 2;
+  } else {
+    return x.length === 2
+  }
 },
 
-isRelativePrimeOf = (a: number, b: number): boolean => {
+isRelativePrimeOf = (a: number|number[], b: number): boolean => {
   return maximalCommonDivisor(a, b) === 1;
 },
 
-maximalCommonDivisor = (a: number, b: number): number => {
-  const aDivisors = divisors(a),
+maximalCommonDivisor = (a: number|number[], b: number): number => {
+  const aDivisors = typeof a === 'number' ? divisors(a) : a,
       bDivisors = divisors(b),
       commonDivisors: number[] = [];
 

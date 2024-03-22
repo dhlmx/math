@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { BasesRoutingModule } from './bases-routing.module';
 import { ExpansionsComponent } from './expansions/expansions.component';
 import { SharedModule } from '../../core/modules/share/shared.module';
+import { CoreModule } from 'src/app/core/core.module';
 
 @NgModule({
   declarations: [
     ExpansionsComponent,
   ],
   imports: [
-    CommonModule,
-    BasesRoutingModule,
-    SharedModule
+    CoreModule,
+    SharedModule,
+    BasesRoutingModule
   ]
 })
 export class BasesModule { }

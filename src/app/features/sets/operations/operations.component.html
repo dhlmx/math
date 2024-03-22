@@ -1,12 +1,64 @@
-<h4>Sets</h4>
-<p>
-  Universe: {{ u | set }}<br />
-  A: {{ a | set }}<br />
-  B: {{ b | set }}
-</p>
-<p>
-  A UNION B: {{ aub | set }}<br />
-  A INTERSECTION B: {{ anb | set }}<br />
-  A COMPLEMENT: {{ ac | set }}<br />
-  B COMPLEMENT: {{ bc | set }}
-</p>
+<app-message-modal
+  [visible]="appService.process.processingMode"
+  [message]="appService.process.message">
+</app-message-modal>
+
+<p-panel>
+  <ng-template pTemplate="header">
+    <div><span class="pi pi-share-alt"></span>&nbsp;Sets</div>
+  </ng-template>
+
+  <ng-template pTemplate="icons">
+    <div>
+      <!--
+      <button type="button" pButton (click)="create()" title="Create expression" class="p-button-outlined p-button-info">
+        <em class="pi pi-plus-circle"></em>
+      </button>
+      -->
+      <button type="button" pButton title="Print list of expressions" class="p-button-outlined p-button-success">
+        <em class="pi pi-print"></em>
+      </button>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="body">
+    <form form="form">
+      <div class="grid bg-gray-900">
+        <div class="col-12 md:col-4">
+          <label for="universe"><span class="pi pi-sort-numeric-up-alt"></span>&nbsp;Universe*</label>
+          <input type="text" inputId="universe" placeholder="Example: [1,2,3,4,5,6,7,8,9,0]" [formControl]="controls.universe" pInputText class="w-full" />
+        </div>
+        <div class="col-12 md:col-4">
+          <label for="setA"><span class="pi pi-sort-numeric-up-alt"></span>&nbsp;Set A*</label>
+          <input type="text" inputId="setA" placeholder="Example: [1,3,5,7,9]" [formControl]="controls.setA" pInputText class="w-full" />
+        </div>
+        <div class="col-12 md:col-4">
+          <label for="setB"><span class="pi pi-share-alt"></span>&nbsp;Set B*</label>
+          <input type="text" inputId="setB" placeholder="Example: [2,4,6,8]" [formControl]="controls.setB" pInputText class="w-full" />
+        </div>
+      </div>
+    </form>
+    <div class="grid bg-gray-900">
+      <div *ngIf="aub.length > 0" class="col-12 md:col-6">
+        <p>A UNION B<br />{{aub|json}}</p>
+      </div>
+      <div *ngIf="anb.length > 0" class="col-12 md:col-6">
+        <p>A INTERSECTION B<br />{{anb}}</p>
+      </div>
+      <div *ngIf="ac.length > 0" class="col-12 md:col-6">
+        <p>A COMPLEMENT U<br />{{ac}}</p>
+      </div>
+      <div *ngIf="bc.length > 0" class="col-12 md:col-6">
+        <p>B COMPLEMENT U<br />{{bc}}</p>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <div class="grid">
+      <div class="col-12 text-center">
+        <button type="button" label="Calculate" pButton title="Calculate" [disabled]="form.invalid" (click)="onClickCalculate()" class="p-button-outlined p-button-info"></button>
+      </div>
+    </div>
+  </ng-template>
+</p-panel>

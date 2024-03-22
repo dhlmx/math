@@ -1,27 +1,26 @@
-import { divisors, isDivisorOf, isEven, isMultipleOf, isOdd, isPrime, isRelativePrimeOf, maximalCommonDivisor } from '../services/utilities/numeric';
+import { divisors, divisorsAsync, isDivisorOf, isEven, isMultipleOf, isOdd, isPrime, isRelativePrimeOf, maximalCommonDivisor } from '../services/utilities/numeric';
 
 export class Integer {
 
   value = 0;
+  divisors: number[] = [];
+  isEven = false;
+  isOdd = false;
+  isPrime = false;
 
   constructor(value?: number) {
     this.value = value ?? 0;
+    this.divisors = [];
+    this.isEven = false;
+    this.isOdd = false;
+    this.isPrime = false;
   }
 
-  get divisors(): number[] {
-    return divisors(this.value);
-  }
-
-  get isEven(): boolean {
-    return isEven(this.value);
-  }
-
-  get isOdd(): boolean {
-    return isOdd(this.value);
-  }
-
-  get isPrime(): boolean {
-    return isPrime(this.value);
+  init = (): void => {
+    this.divisors = divisors(this.value);
+    this.isEven = isEven(this.value);
+    this.isOdd = isOdd(this.value);
+    this.isPrime = isPrime(this.divisors);
   }
 
   isDivisorOf = (b: number): boolean => {
@@ -33,10 +32,10 @@ export class Integer {
   }
 
   isRelativePrimeOf = (b: number): boolean => {
-    return isRelativePrimeOf(this.value, b);
+    return isRelativePrimeOf(this.divisors, b);
   }
 
   maximalCommonDivisorOf = (b: number): number => {
-    return maximalCommonDivisor(this.value, b);
+    return maximalCommonDivisor(this.divisors, b);
   }
 }
