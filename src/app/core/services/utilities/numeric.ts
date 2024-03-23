@@ -130,18 +130,34 @@ maximalCommonDivisor = (a: number|number[], b: number): number => {
   return commonDivisors.length > 0 ? commonDivisors[commonDivisors.length - 1] : 0;
 },
 
-union = (a: number[], b: number[]): number[] => {
-  const aub: number[] = [];
+parseSet = (set: string[]): any[] => {
+  const setParsed: any[] = [];
 
-  a.forEach(ai => {
-    if (!aub.includes(ai)) {
-      aub.push(ai);
+  set.forEach(item => {
+    let itemParsed = parseFloat(item.trim());
+
+    if (isNaN(itemParsed)) {
+      itemParsed = parseInt(item);
+    }
+
+    setParsed.push(isNaN(itemParsed) ? item : itemParsed);
+  });
+
+  return setParsed;
+},
+
+union = (setA: any[], setB: any[]): any[] => {
+  const aub: any[] = [];
+
+  setA.forEach(aItem => {
+    if (!aub.includes(aItem)) {
+      aub.push(aItem);
     }
   });
 
-  b.forEach(bi => {
-    if (!aub.includes(bi)) {
-      aub.push(bi);
+  setB.forEach(bItem => {
+    if (!aub.includes(bItem)) {
+      aub.push(bItem);
     }
   });
 

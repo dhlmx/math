@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 // Services
 import { AppService } from '../../../core/services/utilities/app.service';
-import { complement, intersection, union } from '../../../core/services/utilities/numeric';
+import { complement, intersection, parseSet, union } from '../../../core/services/utilities/numeric';
 
 @Component({
   selector: 'app-operations',
@@ -12,14 +12,14 @@ import { complement, intersection, union } from '../../../core/services/utilitie
 })
 export class OperationsComponent implements OnInit {
 
-  universe: number[] = [];
-  setA: number[] = [];
-  setB: number[] = [];
+  universe: any[] = [];
+  setA: any[] = [];
+  setB: any[] = [];
 
-  aub: number[] = [];
-  anb: number[] = [];
-  ac: number[] = [];
-  bc: number[] = [];
+  aub: any[] = [];
+  anb: any[] = [];
+  ac: any[] = [];
+  bc: any[] = [];
 
   controls = {
     universe: new FormControl('', [Validators.required]),
@@ -43,13 +43,13 @@ export class OperationsComponent implements OnInit {
     this.appService.process.start('Calculating...');
 
     setTimeout(() => {
-      const universe = JSON.stringify(this.controls.universe.value),
-      setA = JSON.stringify(this.controls.setA.value),
-      setB = JSON.stringify(this.controls.setB.value);
+      const universe = `${this.controls.universe.value}`,
+          setA = `${this.controls.setA.value}`,
+          setB = `${this.controls.setB.value}`;
 
-      this.universe = Array(JSON.parse(universe));
-      this.setA = Array(JSON.parse(setA));
-      this.setB = Array(JSON.parse(setB));
+      this.universe = parseSet(universe.split(','));
+      this.setA = parseSet(setA.split(','));
+      this.setB = parseSet(setB.split(','));
 
       this.aub = union(this.setA, this.setB);
       this.anb = intersection(this.setA, this.setB);
