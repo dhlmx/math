@@ -4,12 +4,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientJsonpModule } from '@angular/common/http';
 import { PrimeNgModule } from './modules/prime-ng/prime-ng.module';
 import { MessageModalComponent } from './components/message-modal/message-modal.component';
+import { D3BarsComponent } from './components/d3-bars/d3-bars.component';
+import { D3PieComponent } from './components/d3-pie/d3-pie.component';
+import { D3TreeComponent } from './components/d3-tree/d3-tree.component';
+import { D3TidyTreeComponent } from './components/d3-tidy-tree/d3-tidy-tree.component';
 
 // Components & Pipes
 
 @NgModule({
   declarations: [
-    MessageModalComponent
+    MessageModalComponent,
+    D3BarsComponent,
+    D3PieComponent,
+    D3TreeComponent,
+    D3TidyTreeComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +32,11 @@ import { MessageModalComponent } from './components/message-modal/message-modal.
     ReactiveFormsModule,
     HttpClientJsonpModule,
     PrimeNgModule,
-    MessageModalComponent
+    MessageModalComponent,
+    D3BarsComponent,
+    D3PieComponent,
+    D3TreeComponent,
+    D3TidyTreeComponent
   ]
 })
 export class CoreModule { }
