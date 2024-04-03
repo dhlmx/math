@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { GuestCodeEnum, GuestEnum } from '../../../core/enums/guest.enum';
 import { Integer } from '../../../core/models/integer';
 import { Apex } from '../../../core/models/apex';
@@ -33,37 +33,7 @@ import { AppService } from 'src/app/core/services/utilities/app.service';
 })
 export class ColorComponent implements OnInit {
 
-  hostElement: any;
-  svg: any;
-  g: any;
-
-  colors = d3.scaleOrdinal(d3.schemeCategory10);
-  colorScale: any;
-
-  width = 640;
-  height = 400;
-  margin = 50;
-  padding = 2;
-
-  x: d3.ScaleBand<string> = d3.scaleBand();
-  y: d3.ScaleLinear<number, number, never> = d3.scaleLinear();
-
-  xmax = 45;
-  ymax = 200;
-  hticks = 60;
-  area: any;
-  histogram: any;
-
-  showLabel = 1;
-
-  data = TECNOLOGIES_DATA;
   treeData: IChild = {} as IChild;
-  // tidyTreeData = FLARE_DATA;
-  tidyTreeData: any;
-  bins: any[] = [];
-  paths: any[] = [];
-
-  bars: any;
   graph = new Graph();
 
   get edges(): any[] {
@@ -77,16 +47,11 @@ export class ColorComponent implements OnInit {
   options: IOptionsXY = { width: 800, height: 600 };
   forcesGraph = new ForceD3([], [], { width: 400, height: 320});
 
-    constructor(
-    public appService: AppService,
-    private render: Renderer2,
-    private elRef: ElementRef
-  ) {
-    this.hostElement = elRef.nativeElement;
-    // this.bars = new Bar(650, 400, 50, 0.2);
-  }
+  constructor(public appService: AppService) {}
 
   ngOnInit(): void {
+    this.appService.process.start('Loading...');
+
     this.graph.apexes = [
       new Apex({ id: 8, alias: DUQUESA_ID, name: DUQUESA, blackList: [
         ADELA_COUPLE_ID, ALONDRA_COUPLE_ID, ANABEL_COUPLE_ID,
@@ -155,14 +120,6 @@ export class ColorComponent implements OnInit {
 
     console.info('graph', this.graph);
 
-    /*
-    IChild = {
-    name: 'Eve',
-    value: 15,
-    type: 'black',
-    level: 'yellow',
-    */
-
     this.treeData = {
       name: 'Guests',
       value: 18,
@@ -186,115 +143,14 @@ export class ColorComponent implements OnInit {
       })
     } as IChild;
 
+    this.appService.process.stop();
+  }
 
-    this.tidyTreeData = {
-      name: 'Mesas',
-      children: this.graph.colors.map(color => {
-        return {
-          name: `Mesa ${color.id}`,
-          children: color.apexes.map(apex => {
-            return {
-              name: apex.name,
-              value: apex.id
-            }
-          }),
-          value: color.id
-        }
-      })
-    };
-
-    // this.bars.svg.node();
-
-    // d3.select(this.hostElement).select('svg').remove();
-
-    let viewBoxHeight = 100;
-    let viewBoxWidth = 200;
-
-    // this.svg = d3.select(this.hostElement).append('svg')
-    //   .attr('width', '100%')
-    //   .attr('height', '100%')
-    //   .attr('viewBox', '0 0 ' + viewBoxWidth + ' ' + viewBoxHeight);
-
-
-
-    // this.colorScale = d3.scaleOrdinal(d3.schemeCategory10);
-
-    // this.g = this.svg.append("g").attr("transform", "translate(0,0)");
-
-    // this.x = d3.scaleLinear()
-      // .domain([0, this.xmax])
-      // .range([30, 170]);
-
-    // this.g.append('g')
-    //   .attr('transform', 'translate(0,90)')
-    //   .attr("stroke-width", 0.5)
-    //   .call(d3.axisBottom(this.x).tickSize(0).tickFormat(<any>''));
-
-    // this.g.append('g')
-    //   .attr('transform', 'translate(0,90)')
-    //   .style('font-size', '6')
-    //   .style("stroke-dasharray", ("1,1"))
-    //   .attr("stroke-width", 0.1)
-    //   .call(d3.axisBottom(this.x).ticks(10).tickSize(-80));
-
-    //   this.y = d3.scaleLinear()
-    //     .domain([0, this.ymax])
-    //     .range([90, 10]);
-    //   this.g.append('g')
-    //     .attr('transform', 'translate(30,0)')
-    //     .attr("stroke-width", 0.5)
-    //     .call(d3.axisLeft(this.y).tickSize(0).tickFormat(<any>''));
-    //   this.g.append('g')
-    //     .attr('transform', 'translate(30,0)')
-    //     .style("stroke-dasharray", ("1,1"))
-    //     .attr("stroke-width", 0.1)
-    //     .call(d3.axisLeft(this.y).ticks(4).tickSize(-140))
-    //     .style('font-size', '6');
-
-    // if (this.showLabel === 1) {
-    //   this.g.append('text')
-    //   .attr('text-anchor', 'middle')
-    //   .attr('transform', 'translate(10,50) rotate(-90)')
-    //   .style('font-size', 8)
-    //   .text('Frequency');
-    // }
-
-    // this.area = d3.area()
-    //   .x((datum: any) => this.x(d3.mean([datum.x1, datum.x2])))
-    //   .y0(this.y(0))
-    //   .y1((datum: any) => this.y(datum.length));
-
-
-    // this.histogram = d3.histogram()
-    //   .value((datum) => datum)
-    //   .domain([0, this.xmax])
-    //   .thresholds(this.x.ticks(this.hticks));
-
-    // this.data = [15,30,45,60,75];
-
-    // this.bins = [];
-    // this.data.forEach((row) => {
-    //   this.bins.push(this.histogram(row))
-    // });
-
-    // this.paths = [];
-    // this.bins.forEach((row, index) => {
-    //   this.paths.push(this.g.append('path')
-    //     .datum(row)
-    //     .attr('fill', this.colorScale('' + index))
-    //     .attr("stroke-width", 0.1)
-    //     .attr('opacity', 0.5)
-    //     .attr('d', (datum: any) => this.area(datum))
-    //   );
-    // });
-
-
-    // this.bars.draw(TECNOLOGIES);
-    // this.svg.nativeElement = this.bars.svg.node();
+  getColor = (color: string): string => {
+    return getColor(color);
   }
 
   mapColorApex = (index: number): string[] => {
     return this.graph.colors[index].apexes.map(a => a.name);
   }
-
 }

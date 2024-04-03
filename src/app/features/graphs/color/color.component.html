@@ -24,54 +24,138 @@
   <ng-template pTemplate="body">
     <div class="grid bg-gray-900">
       <div class="col-12 md:col-6">
-        <!-- Data -->
-        <table>
-          <caption>
-            <h4>Guests</h4>
-          </caption>
-          <thead>
+        <p style="padding: 4px 8px; text-align: justify; font-size: large; font-weight: bold;">Planteamiento:</p>
+        <p style="padding: 4px 8px; text-align: justify;">Una condesa ha decidido invitar a todos sus familiares a su cumpleaños. Dado que sabe que entre algunos de ellos no se mantienen buenas relaciones, ha pedido a sus sirvientes que los acomoden en mesas separadas, procurando que no exista ningún tipo de hostilidad entre los comensales.</p>
+        <p style="padding: 4px 8px; text-align: justify;">Otras consideraciones:
+          <br />-Debe procurarse el menor número de mesas.
+          <br />-A cada mesa se le debe asignar un color distinto al de las demás mesas.
+        </p>
+        <p style="padding: 4px 8px; text-align: justify;">La siguiente tabla muestra a cada uno de los invitados y su respectiva "lista negra", es decir, la lista de personas con las que no mantiene una buena relación.
+        </p>
+
+        <p-table #dt
+          [value]="graph.apexes"
+          dataKey="id"
+          [paginator]="false"
+          [rows]="50"
+          [showCurrentPageReport]="true"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} guests"
+          [rowsPerPageOptions]="[10, 25, 50, 100]"
+          [filterDelay]="100"
+          [globalFilterFields]="[]"
+          styleClass="p-datatable-gridlines p-datatable-striped">
+
+          <ng-template pTemplate="caption">
+            <div class="table-header">
+              <div class="grid">
+                <div class="col-12"><span class="pi pi-sort-alpha-down"></span>&nbsp;Invitados</div>
+              </div>
+            </div>
+          </ng-template>
+
+          <ng-template pTemplate="header">
             <tr>
-              <th>Order</th>
-              <th>Alias</th>
-              <th>Name</th>
-              <th>Black List</th>
+              <th id="order" pSortableColumn="id" class="width-15"><p-sortIcon field="id"></p-sortIcon>&nbsp;Orden</th>
+              <th id="alias" pSortableColumn="alias" class="width-15"><p-sortIcon field="alias"></p-sortIcon>&nbsp;Alias</th>
+              <th id="name" pSortableColumn="name" class="width-20 text-center"><p-sortIcon field="name"></p-sortIcon>Nombre</th>
+              <th id="blackList" class="width-50 text-center">Lista negra</th>
             </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let i of graph.apexes">
-              <td>{{ i.id }}</td>
-              <td>{{ i.alias }}</td>
-              <td>{{ i.name }}</td>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-item>
+            <tr style="font-size: small; vertical-align: top;">
               <td>
-                {{ i.blackList | set }}
+                <p>{{item.id}}</p>
+              </td>
+              <td class="text-center">
+                <p>{{item.alias}}</p>
+              </td>
+              <td>
+                <p>{{item.name}}</p>
+              </td>
+              <td>
+                <p>
+                  {{item.blackList | set}}
+                </p>
               </td>
             </tr>
-          </tbody>
-        </table>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="4">Guests not found!</td>
+            </tr>
+          </ng-template>
+        </p-table>
+
+        <p style="padding: 4px 8px; text-align: justify;">Fuente:
+          <br /><span style="font-style: italic;">El cumpleaños de la Condesa.</span>
+          <br />Montejano, Amanda, <span style="font-style: italic;">Matemáticas de colores.</span>
+          <br />Pps: 38-51. Fondo de Cultura Económica. 2022.
+        </p>
+        <!-- Data -->
       </div>
       <div class="col-12 md:col-6">
-        <table>
-          <caption>
-            <h4>Tables</h4>
-          </caption>
-          <thead>
+        <p style="padding: 4px 8px; text-align: justify; font-size: large; font-weight: bold;">Solución:</p>
+        <p style="padding: 4px 8px; text-align: justify;">La solución en estricto sentido matemático es muy compleja. Sin embargo, podemos usar un proceso iterativo para determinar soluciones adecuadas al problema.</p>
+        <p style="padding: 4px 8px; text-align: justify;">En este sentido, nuestro algoritmo adquiere gran utilidad práctica al convertirse en un verdadero laboratorio experimental.</p>
+        <p style="padding: 4px 8px; text-align: justify;">Si se observa la lista de invitados, podemos notar que incluye un orden específico. Tal orden corresponde al de la fuente original de la cual se tomó el problema.</p>
+        <p style="padding: 4px 8px; text-align: justify;">Durante la fase de pruebas de nuestro algoritmo notamos que nuestros resultados no correspondían a los que aparecían en la fuente original. Luego de la consiguiente revisión y de la consistencia obtenida, nos surgió la pregunta: ¿qué sucede si variamos el orden en que llegan los invitados? Los resultados obtenidos por el algoritmo fueron más que interesantes: el número de mesas varía.</p>
+        <p style="padding: 4px 8px; text-align: justify;">De esta manera, decidimos crear dos escenarios de solución. El primero corresponde a uno en el que se respeta el orden en que llegan los invitados, según la fuente original del problema. El siguiente escenario es el aleatorio, es decir, el orden en que llegan los invitados variará y entonces el número de mesas puede variar. Este resultado es lo más interesante de nuestra solución, ya que sustenta una hipótesis que enriquece la visualización del problema y muestra mejor su gran grado de complejidad matemática.</p>
+
+        <app-d3-radial-tree [data]="treeData"></app-d3-radial-tree>
+
+        <p-table #dt2
+          [value]="graph.colors"
+          dataKey="id"
+          [paginator]="false"
+          [rows]="50"
+          [showCurrentPageReport]="true"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} tables"
+          [rowsPerPageOptions]="[10, 25, 50, 100]"
+          [filterDelay]="100"
+          [globalFilterFields]="[]"
+          styleClass="p-datatable-gridlines p-datatable-striped">
+
+          <ng-template pTemplate="caption">
+            <div class="table-header">
+              <div class="grid">
+                <div class="col-12"><span class="pi pi-sort-alpha-down"></span>&nbsp;Mesas</div>
+              </div>
+            </div>
+          </ng-template>
+
+          <ng-template pTemplate="header">
             <tr>
-              <th>Order</th>
-              <th>Color</th>
-              <th>Guests</th>
+              <th id="order" pSortableColumn="id" class="width-15"><p-sortIcon field="id"></p-sortIcon>&nbsp;Orden</th>
+              <th id="color" pSortableColumn="alias" class="width-15"><p-sortIcon field="name"></p-sortIcon>&nbsp;Mesa</th>
+              <th id="guests" class="width-70 text-center">Invitados</th>
             </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let color of graph.colors; let j = index;">
-              <td>{{ color.id }}</td>
-              <td>{{ color.name }}</td>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-item>
+            <tr style="font-size: small; vertical-align: top;">
               <td>
-                {{ mapColorApex(j) | set }}
+                <p>{{item.id}}</p>
+              </td>
+              <td>
+                <p>{{getColor(item.name)}}</p>
+              </td>
+              <td>
+                <p>
+                  {{item.blackList | set}}
+                  {{ mapColorApex(item.id - 1) | set }}
+                </p>
               </td>
             </tr>
-          </tbody>
-        </table>
-        <app-d3-tree [treeData]="treeData"></app-d3-tree>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="4">Tables not found!</td>
+            </tr>
+          </ng-template>
+        </p-table>
       </div>
     </div>
     <!-- <form form="form">
@@ -100,40 +184,3 @@
     </div>
   </ng-template>
 </p-panel>
-
-
-
-<!-- <app-d3-bars [frameworks]="data"></app-d3-bars>
-<app-d3-pie [frameworks]="data"></app-d3-pie> -->
-<!-- <app-d3-tidy-tree [data]="tidyTreeData"></app-d3-tidy-tree>
-<p>Representación gráfica con D3.js</p> -->
-
-<!-- NODES
-[
-    {
-      id: 'first',
-      label: 'A'
-    }, {
-      id: 'second',
-      label: 'B'
-    }, {
-      id: 'third',
-      label: 'C'
-    }
-  ]
--->
-
-<!-- EDGES
-[
-    {
-      id: 'a',
-      source: 'first',
-    target: 'second',
-      label: 'is parent of'
-    }, {
-      id: 'b',
-      source: 'first',
-      target: 'third',
-      label: 'custom label'
-    }
-  ]-->
