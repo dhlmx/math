@@ -24,14 +24,13 @@
   <ng-template pTemplate="body">
     <div class="grid bg-gray-900">
       <div class="col-12 md:col-6">
-        <p style="padding: 4px 8px; text-align: justify; font-size: large; font-weight: bold;">Planteamiento:</p>
-        <p style="padding: 4px 8px; text-align: justify;">Una condesa ha decidido invitar a todos sus familiares a su cumpleaños. Dado que sabe que entre algunos de ellos no se mantienen buenas relaciones, ha pedido a sus sirvientes que los acomoden en mesas separadas, procurando que no exista ningún tipo de hostilidad entre los comensales.</p>
-        <p style="padding: 4px 8px; text-align: justify;">Otras consideraciones:
+        <p class="title">Planteamiento:</p>
+        <p>Una condesa ha decidido invitar a todos sus familiares a su cumpleaños. Dado que sabe que entre algunos de ellos no se mantienen buenas relaciones, ha pedido a sus sirvientes que los acomoden en mesas separadas, procurando que no exista ningún tipo de hostilidad entre los comensales.</p>
+        <p>Otras consideraciones:
           <br />-Debe procurarse el menor número de mesas.
           <br />-A cada mesa se le debe asignar un color distinto al de las demás mesas.
         </p>
-        <p style="padding: 4px 8px; text-align: justify;">La siguiente tabla muestra a cada uno de los invitados y su respectiva "lista negra", es decir, la lista de personas con las que no mantiene una buena relación.
-        </p>
+        <p>La siguiente tabla muestra a cada uno de los invitados y su respectiva "lista negra", es decir, la lista de personas con las que no mantiene una buena relación.</p>
 
         <p-table #dt
           [value]="graph.apexes"
@@ -55,10 +54,10 @@
 
           <ng-template pTemplate="header">
             <tr>
-              <th id="order" pSortableColumn="id" class="width-15"><p-sortIcon field="id"></p-sortIcon>&nbsp;Orden</th>
-              <th id="alias" pSortableColumn="alias" class="width-15"><p-sortIcon field="alias"></p-sortIcon>&nbsp;Alias</th>
-              <th id="name" pSortableColumn="name" class="width-20 text-center"><p-sortIcon field="name"></p-sortIcon>Nombre</th>
-              <th id="blackList" class="width-50 text-center">Lista negra</th>
+              <th id="order" pSortableColumn="id" class="width-20"><p-sortIcon field="id"></p-sortIcon>&nbsp;Orden</th>
+              <th id="alias" pSortableColumn="alias" class="width-20"><p-sortIcon field="alias"></p-sortIcon>&nbsp;Alias</th>
+              <th id="name" pSortableColumn="name" class="width-25"><p-sortIcon field="name"></p-sortIcon>&nbsp;Nombre</th>
+              <th id="blackList" class="width-35 text-center">Lista negra</th>
             </tr>
           </ng-template>
 
@@ -96,14 +95,24 @@
         <!-- Data -->
       </div>
       <div class="col-12 md:col-6">
-        <p style="padding: 4px 8px; text-align: justify; font-size: large; font-weight: bold;">Solución:</p>
-        <p style="padding: 4px 8px; text-align: justify;">La solución en estricto sentido matemático es muy compleja. Sin embargo, podemos usar un proceso iterativo para determinar soluciones adecuadas al problema.</p>
-        <p style="padding: 4px 8px; text-align: justify;">En este sentido, nuestro algoritmo adquiere gran utilidad práctica al convertirse en un verdadero laboratorio experimental.</p>
-        <p style="padding: 4px 8px; text-align: justify;">Si se observa la lista de invitados, podemos notar que incluye un orden específico. Tal orden corresponde al de la fuente original de la cual se tomó el problema.</p>
-        <p style="padding: 4px 8px; text-align: justify;">Durante la fase de pruebas de nuestro algoritmo notamos que nuestros resultados no correspondían a los que aparecían en la fuente original. Luego de la consiguiente revisión y de la consistencia obtenida, nos surgió la pregunta: ¿qué sucede si variamos el orden en que llegan los invitados? Los resultados obtenidos por el algoritmo fueron más que interesantes: el número de mesas varía.</p>
-        <p style="padding: 4px 8px; text-align: justify;">De esta manera, decidimos crear dos escenarios de solución. El primero corresponde a uno en el que se respeta el orden en que llegan los invitados, según la fuente original del problema. El siguiente escenario es el aleatorio, es decir, el orden en que llegan los invitados variará y entonces el número de mesas puede variar. Este resultado es lo más interesante de nuestra solución, ya que sustenta una hipótesis que enriquece la visualización del problema y muestra mejor su gran grado de complejidad matemática.</p>
+        <p class="title">Solución:</p>
+        <p>La solución en estricto sentido matemático es muy compleja. Sin embargo, podemos usar un proceso iterativo para determinar soluciones adecuadas al problema.</p>
+        <p>En este sentido, nuestro algoritmo adquiere gran utilidad práctica al convertirse en un verdadero laboratorio experimental.</p>
+        <p>Si se observa la lista de invitados, podemos notar que incluye un orden específico. Tal orden corresponde al de la fuente original de la cual se tomó el problema.</p>
+        <p>Durante la fase de pruebas de nuestro algoritmo notamos que nuestros resultados no correspondían con los que aparecen en la fuente original. Luego de la consiguiente revisión y de la consistencia ofrecida por nuestro algoritmo, nos surgió la pregunta: ¿qué sucede si variamos el orden en que llegan los invitados? Los resultados obtenidos por el algoritmo fueron más que interesantes: el número de mesas varía.</p>
+        <p>De esta manera, decidimos crear dos escenarios de solución. El primero corresponde a uno en el que se respeta el orden en que llegan los invitados, según la fuente original del problema. El siguiente escenario es el aleatorio, es decir, el orden en que llegan los invitados variará y entonces el número de mesas variará en un momento dado. Este resultado es lo más interesante de nuestra solución, ya que por un lado sustenta la hipótesis de que el número de mesas variará según el orden en que lleguen los invitados, y por por otro lado, visualiza mejor el enorme grado de complejidad matemática del problema.</p>
 
-        <app-d3-radial-tree [data]="treeData"></app-d3-radial-tree>
+        <form form="form">
+          <label for="calculation"><span class="pi pi-sort-alt-slash"></span>&nbsp;Tipo de cálculo basado en el orden de los invitados</label>
+          <p-dropdown id="calculation"
+            [options]="calculations" [formControl]="controls.calculation"
+            optionLabel="label" optionValue="value" optionDisabled="inactive"
+            (onChange)="onChangeCalculation()"
+            styleClass="w-full">
+          </p-dropdown>
+        </form>
+
+        <app-d3-radial-tree [data]="graph.tree"></app-d3-radial-tree>
 
         <p-table #dt2
           [value]="graph.colors"
@@ -127,9 +136,9 @@
 
           <ng-template pTemplate="header">
             <tr>
-              <th id="order" pSortableColumn="id" class="width-15"><p-sortIcon field="id"></p-sortIcon>&nbsp;Orden</th>
-              <th id="color" pSortableColumn="alias" class="width-15"><p-sortIcon field="name"></p-sortIcon>&nbsp;Mesa</th>
-              <th id="guests" class="width-70 text-center">Invitados</th>
+              <th id="order" pSortableColumn="id" class="width-20"><p-sortIcon field="id"></p-sortIcon>&nbsp;Orden</th>
+              <th id="color" pSortableColumn="alias" class="width-20"><p-sortIcon field="name"></p-sortIcon>&nbsp;Mesa</th>
+              <th id="guests" class="width-60 text-center">Invitados</th>
             </tr>
           </ng-template>
 
@@ -139,11 +148,11 @@
                 <p>{{item.id}}</p>
               </td>
               <td>
-                <p>{{getColor(item.name)}}</p>
+                <p>{{item.name}}</p>
               </td>
               <td>
                 <p>
-                  {{item.blackList | set}}
+                  <!-- {{item.blackList | set}} -->
                   {{ mapColorApex(item.id - 1) | set }}
                 </p>
               </td>
@@ -158,22 +167,6 @@
         </p-table>
       </div>
     </div>
-    <!-- <form form="form">
-      <div class="grid bg-gray-900">
-        <div class="col-12 md:col-2">
-          <label for="number"><span class="pi pi-sort-numeric-up-alt"></span>&nbsp;Number*</label>
-          <input type="number" inputId="number" placeholder="Number" [formControl]="controls.number" pInputText class="w-full" />
-        </div>
-        <div class="col-12 md:col-2">
-          <label for="base"><span class="pi pi-sort-numeric-up-alt"></span>&nbsp;Base*</label>
-          <input type="number" inputId="base" placeholder="Base" [formControl]="controls.base" pInputText class="w-full" />
-        </div>
-        <div class="col-12 md:col-8">
-          <label for="expansion"><span class="pi pi-share-alt"></span>&nbsp;Expansion</label>
-          <input type="text" inputId="expansion" placeholder="Expansion" [formControl]="controls.expansion" pInputText class="w-full" />
-        </div>
-      </div>
-    </form> -->
   </ng-template>
 
   <ng-template pTemplate="footer">

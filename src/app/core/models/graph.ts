@@ -1,3 +1,4 @@
+import { IChild } from '../interfaces/d3/ichild';
 import { Apex } from './apex';
 import { Color } from './color';
 import { Edge } from './edge';
@@ -6,22 +7,21 @@ export class Graph {
   apexes: Apex[] = [];
   colors: Color[]= [];
   edges: Edge[] = [];
+  tree: IChild = {} as IChild;
 
   defineColor = (): void => {
     this.colors.forEach(color => {
       if (color.id === 1) {
-        color.name = 'Rojo';
+        color.name = 'red';
       } else if (color.id === 2) {
-        color.name = 'Morado';
+        color.name = 'purple';
       } else if (color.id === 3) {
-        color.name = 'Amarillo';
+        color.name = 'yellow';
       } else if (color.id === 4) {
-        color.name = 'Verde';
+        color.name = 'green';
       } else if (color.id === 5) {
-        color.name = 'Naranja';
+        color.name = 'orange';
       }
     });
   }
 }
-
-

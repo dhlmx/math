@@ -9,8 +9,4 @@ export class MessageModalComponent {
 
   @Input() visible = false;
   @Input() message = '';
-
-  constructor() {
-    console.log('Message modal...');
-  }
 }

@@ -52,6 +52,7 @@ export class D3RadialTreeComponent implements OnChanges, OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['data']) {
+      this.removeSVG();
       this.setup();
       this.createSVG();
     }
@@ -59,12 +60,6 @@ export class D3RadialTreeComponent implements OnChanges, OnInit {
 
   ngOnInit(): void {
     // TODO throw new Error('Method not implemented.');
-  }
-
-  setup = (): void => {
-    this.cluster = d3.cluster().size([this.style.cluster.degrees, this.style.cluster.radius]);
-    this.root = d3.hierarchy(this.data, (d: any) => d.children);
-    this.cluster(this.root);
   }
 
   createSVG = (): void => {
@@ -108,5 +103,15 @@ export class D3RadialTreeComponent implements OnChanges, OnInit {
       .style('stroke', this.style.text.stroke)
       .style('font-size', this.style.text.fontSize)
       .text((d: any) => d.data.name);
+  }
+
+  removeSVG = (): void => {
+    d3.selectAll('svg').remove();
+  }
+
+  setup = (): void => {
+    this.cluster = d3.cluster().size([this.style.cluster.degrees, this.style.cluster.radius]);
+    this.root = d3.hierarchy(this.data, (d: any) => d.children);
+    this.cluster(this.root);
   }
 }

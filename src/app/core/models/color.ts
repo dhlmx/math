@@ -17,7 +17,7 @@ export class Color {
   inApexes = (externalApex: Apex): boolean => {
     const result = this.apexes.findIndex(innerApex => innerApex.alias === externalApex.alias) >= 0;
 
-    console.info('inApexes', result, externalApex.id, externalApex.alias);
+    // console.info('inApexes', result, externalApex.id, externalApex.alias);
 
     return result;
   }
@@ -25,7 +25,7 @@ export class Color {
   inSomeBlackList = (externalApex: Apex): boolean => {
     const result = this.apexes.some(innerApex => innerApex.inBlackList(externalApex.alias));
 
-    console.info('inSomeBlackList', result, externalApex.id, externalApex.alias);
+    // console.info('inSomeBlackList', result, externalApex.id, externalApex.alias);
 
     return result;
   }
@@ -33,7 +33,7 @@ export class Color {
   inApexBlackList = (externalApex: Apex): boolean => {
     const result = this.apexes.some(innerApex => externalApex.inBlackList(innerApex.alias));
 
-    console.info('inApexBlackList', result, externalApex.id, externalApex.alias);
+    // console.info('inApexBlackList', result, externalApex.id, externalApex.alias);
 
     return result;
   }
