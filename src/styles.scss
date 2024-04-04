@@ -20,6 +20,21 @@ a:hover {
   color: whitesmoke;
 }
 
+p {
+  padding: 4px 6px;
+  font-kerning: auto;
+  text-align: justify;
+}
+
+.cursive {
+  font-style: italic;
+}
+
+.required {
+  // font-variant-position: super;
+  color: maroon;
+}
+
 .menu {
   display: block;
   margin: 0;
@@ -37,6 +52,20 @@ a:hover {
   }
 }
 
+.subtitle {
+  font-size: medium;
+  font-weight: bold;
+}
+
+.tag {
+  margin: 4px 8Px;
+  padding: 2px;
+}
+
+.title {
+  font-size: large;
+  font-weight: bold;
+}
 
 .width-10 {
   width: 10%;

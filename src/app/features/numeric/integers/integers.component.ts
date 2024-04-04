@@ -1,4 +1,4 @@
-import { Component, DoCheck, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 // Services
@@ -7,7 +7,6 @@ import { AppService } from 'src/app/core/services/utilities/app.service';
 // Models
 import { Integer } from '../../../core/models/integer';
 import { Series } from '../../../core/models/series';
-import { divisors, isEven, isOdd, isPrime } from 'src/app/core/services/utilities/numeric';
 
 @Component({
   selector: 'app-integers',
@@ -21,10 +20,18 @@ export class IntegersComponent implements OnInit {
   series = new Series();
 
   controls = {
-    number: new FormControl(0, [Validators.required, Validators.min(1)]),
-    multipleOf: new FormControl(0),
-    divisorOf: new FormControl(0)
+    number: new FormControl(0, [Validators.required, Validators.min(1), Validators.max(this.maximalSafeNumber)]),
+    multipleOf: new FormControl(0, [Validators.max(this.maximalSafeNumber)]),
+    divisorOf: new FormControl(0, [Validators.max(this.maximalSafeNumber)])
   };
+
+  get maximalNumber(): number {
+    return Number.MAX_VALUE;
+  }
+
+  get maximalSafeNumber(): number {
+    return Number.MAX_SAFE_INTEGER;
+  }
 
   search = new FormControl('');
 

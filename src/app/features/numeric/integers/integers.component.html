@@ -5,7 +5,7 @@
 
 <p-panel>
   <ng-template pTemplate="header">
-    <div><span class="pi pi-fw pi-calculator"></span>&nbsp;Number Attributes</div>
+    <div><span class="pi pi-fw pi-calculator"></span>&nbsp;Teoría del número</div>
   </ng-template>
 
   <ng-template pTemplate="icons">
@@ -22,22 +22,40 @@
   </ng-template>
 
   <ng-template pTemplate="body">
+    <div class="grid bg-gray-900">
+      <div class="col-12 md:col-6">
+        <p class="title">Planteamiento:</p>
+        <p>Cualquier número entero puede descomponerse en sus factores primos.</p>
+        <p><span class="subtitle">Fuente:</span>
+          <br /><span class="cursive">La descomposición de un número en factores primos es única.</span>
+          <br />Hall, M. A., H. S., and Knight, B. A., S. R., <span class="cursive">Álgebra Superior.</span>
+          <br />Pps. 411-413. Editorial UTEHA, S. A. de C. V., 1982.
+        </p>
+      </div>
+      <div class="col-12 md:col-6">
+        <p class="title">Solución:</p>
+        <p>El algoritmo determinará cuáles son esos factores, incluyendo el factor unidad y el mismo número X, los únicos factores resultantes para cuando X resulte ser también un número primo. Además, el algoritmo determina si el número X es primo y si es par o impar.</p>
+        <p>Si el usuario introduce números Y y Z, el algoritmo determinará si X es múltiplo de Y y si X es divisor de Z.</p>
+        <p>Para fines de eficiencia y practicidad se sugiere no usar números enteros mayores a las decenas de miles de millones, aunque teóricamente es posible usar como límite seguro el número {{maximalSafeNumber}}, pero no lo recomendamos. Considérese que mientras mayor sea el número, mayor tiempo demorará el algoritmo en realizar sus cálculos.</p>
+      </div>
+    </div>
     <form form="form">
       <div class="grid bg-gray-900">
         <div class="col-12 md:col-4">
-          <label for="number">&nbsp;Number (Required)</label>
-          <input type="number" inputId="number" placeholder="Number" [formControl]="controls.number" pInputText class="w-full" />
+          <label for="number"><span class="pi pi-sort-numeric-up"></span>&nbsp;Número X<span class="required">*</span></label>
+          <input type="number" inputId="number" placeholder="1...{{maximalSafeNumber}}" [formControl]="controls.number" pInputText class="w-full" />
         </div>
         <div class="col-12 md:col-4">
-          <label for="multipleOf">&nbsp;Multiple of</label>
-          <input type="number" inputId="multipleOf" placeholder="Is multiple of" [formControl]="controls.multipleOf" pInputText class="w-full" />
+          <label for="multipleOf"><span class="pi pi-sort-numeric-up"></span>&nbsp;¿X es múltiplo del número Y?</label>
+          <input type="number" inputId="multipleOf" placeholder="1...{{maximalSafeNumber}}" [formControl]="controls.multipleOf" pInputText class="w-full" />
         </div>
         <div class="col-12 md:col-4">
-          <label for="divisorOf">&nbsp;Divisor of</label>
-          <input type="number" inputId="divisorOf" placeholder="Is divisor Of" [formControl]="controls.divisorOf" pInputText class="w-full" />
+          <label for="divisorOf"><span class="pi pi-sort-numeric-up"></span>&nbsp;¿X es divisor del número Z?</label>
+          <input type="number" inputId="divisorOf" placeholder="1...{{maximalSafeNumber}}" [formControl]="controls.divisorOf" pInputText class="w-full" />
         </div>
       </div>
     </form>
+    <p><span class="required">*</span>Datos requeridos.</p>
 
     <ng-container *ngIf="integers.length > 0">
       <div class="grid bg-gray-900">
@@ -57,7 +75,7 @@
             <ng-template pTemplate="caption">
               <div class="table-header">
                 <div class="grid">
-                  <div class="col-12 md:col-4"><span class="pi pi-sort-alpha-down"></span>&nbsp;Number Theory</div>
+                  <div class="col-12 md:col-4"><span class="pi pi-sort-alpha-down"></span>&nbsp;Atributos del Número</div>
                   <div class="col-12 md:col-8 text-right">
                     <span class="p-input-icon-right ml-auto">
                       <i class="pi pi-search"></i>
@@ -73,10 +91,10 @@
 
             <ng-template pTemplate="header">
               <tr>
-                <th id="value" pSortableColumn="value" class="width-10"><p-sortIcon field="value"></p-sortIcon>&nbsp;Number</th>
-                <th id="attributes" pSortableColumn="attributes" class="width-10"><p-sortIcon field="attributes"></p-sortIcon>&nbsp;Attributes</th>
-                <th id="divisors" class="width-20 text-center">Divisors (Primes)</th>
-                <th id="others" class="width-60 text-center"></th>
+                <th id="value" pSortableColumn="value" class="width-20"><p-sortIcon field="value"></p-sortIcon>&nbsp;Número</th>
+                <th id="attributes" pSortableColumn="attributes" class="width-20"><p-sortIcon field="attributes"></p-sortIcon>&nbsp;Atributos</th>
+                <th id="divisors" class="width-20 text-center">Factores (Primos)</th>
+                <th id="others" class="width-40 text-center"></th>
               </tr>
             </ng-template>
 
@@ -87,14 +105,14 @@
                 </td>
                 <td class="text-center">
                   <ng-container *ngIf="integer.isEven; else isOdd">
-                    <p-tag severity="success" value="Even"><span class="pi pi-check-square text-right">&nbsp;</span></p-tag>
+                    <p-tag severity="success" value="Par"><span class="pi pi-check-square text-right tag">&nbsp;</span></p-tag>
                   </ng-container>
                   <ng-template #isOdd>
-                    <p-tag severity="success" value="Odd"><span class="pi pi-check-square text-right">&nbsp;</span></p-tag>
+                    <p-tag severity="success" value="Impar"><span class="pi pi-check-square text-right tag">&nbsp;</span></p-tag>
                   </ng-template>
                   <ng-container *ngIf="integer.isPrime">
                     <br />
-                    <p-tag severity="primary" value="Prime"><span class="pi pi-check-square text-right">&nbsp;</span></p-tag>
+                    <p-tag severity="primary" value="Primo"><span class="pi pi-check-square text-right tag">&nbsp;</span></p-tag>
                   </ng-container>
                 </td>
                 <td>
