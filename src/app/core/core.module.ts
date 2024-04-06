@@ -9,6 +9,7 @@ import { D3PieComponent } from './components/d3-pie/d3-pie.component';
 import { D3TreeComponent } from './components/d3-tree/d3-tree.component';
 import { D3TidyTreeComponent } from './components/d3-tidy-tree/d3-tidy-tree.component';
 import { D3RadialTreeComponent } from './components/d3-radial-tree/d3-radial-tree.component';
+import { D3LogScaleComponent } from './components/d3-log-scale/d3-log-scale.component';
 
 // Components & Pipes
 
@@ -19,7 +20,8 @@ import { D3RadialTreeComponent } from './components/d3-radial-tree/d3-radial-tre
     D3PieComponent,
     D3TreeComponent,
     D3TidyTreeComponent,
-    D3RadialTreeComponent
+    D3RadialTreeComponent,
+    D3LogScaleComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,8 @@ import { D3RadialTreeComponent } from './components/d3-radial-tree/d3-radial-tre
     D3PieComponent,
     D3TreeComponent,
     D3TidyTreeComponent,
-    D3RadialTreeComponent
+    D3RadialTreeComponent,
+    D3LogScaleComponent
   ]
 })
 export class CoreModule { }

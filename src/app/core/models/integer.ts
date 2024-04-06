@@ -1,3 +1,4 @@
+import { KeyValue } from '@angular/common';
 import { divisors, divisorsAsync, isDivisorOf, isEven, isMultipleOf, isOdd, isPrime, isRelativePrimeOf, maximalCommonDivisor } from '../services/utilities/numeric';
 
 export class Integer {
@@ -14,6 +15,16 @@ export class Integer {
     this.isEven = false;
     this.isOdd = false;
     this.isPrime = false;
+  }
+
+  get divisorsMap(): KeyValue<string, number>[] {
+    const divMap: KeyValue<string, number>[] = [];
+
+    this.divisors.forEach((v, k) => {
+      divMap.push({ key: `${k + 1}`, value: v });
+    });
+
+    return divMap;
   }
 
   init = (): void => {

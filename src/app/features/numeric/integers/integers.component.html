@@ -34,8 +34,9 @@
       </div>
       <div class="col-12 md:col-6">
         <p class="title">Solución:</p>
-        <p>El algoritmo determinará cuáles son esos factores, incluyendo el factor unidad y el mismo número X, los únicos factores resultantes para cuando X resulte ser también un número primo. Además, el algoritmo determina si el número X es primo y si es par o impar.</p>
+        <p>El algoritmo determinará cuáles son esos factores, incluyendo el factor unidad y el mismo número X, los únicos factores resultantes para cuando X sea un número primo. Además, el algoritmo determina si el número X es primo y si es par o impar.</p>
         <p>Si el usuario introduce números Y y Z, el algoritmo determinará si X es múltiplo de Y y si X es divisor de Z.</p>
+        <p>Se incluye un gráfico con escalas logarítmicas, con el cual se podrán visualizar resultados geométricamente muy interesantes, y en ocasiones patrones de comportamiento sorprendentes.</p>
         <p>Para fines de eficiencia y practicidad se sugiere no usar números enteros mayores a las decenas de miles de millones, aunque teóricamente es posible usar como límite seguro el número {{maximalSafeNumber}}, pero no lo recomendamos. Considérese que mientras mayor sea el número, mayor tiempo demorará el algoritmo en realizar sus cálculos.</p>
       </div>
     </div>
@@ -59,7 +60,7 @@
 
     <ng-container *ngIf="integers.length > 0">
       <div class="grid bg-gray-900">
-        <div class="col-12">
+        <div class="col-12 md:col-6">
           <p-table #dt
             [value]="integers"
             dataKey="id"
@@ -77,13 +78,13 @@
                 <div class="grid">
                   <div class="col-12 md:col-4"><span class="pi pi-sort-alpha-down"></span>&nbsp;Atributos del Número</div>
                   <div class="col-12 md:col-8 text-right">
-                    <span class="p-input-icon-right ml-auto">
+                    <!-- <span class="p-input-icon-right ml-auto">
                       <i class="pi pi-search"></i>
                       <input type="text" pInputText
                         [formControl]="search"
                         (input)="dt.filterGlobal(search.value, 'contains')"
                         placeholder="Global search" />
-                    </span>
+                    </span> -->
                   </div>
                 </div>
               </div>
@@ -120,6 +121,7 @@
                     {{divisor}}
                   </p>
                 </td>
+                <td></td>
               </tr>
             </ng-template>
 
@@ -130,13 +132,16 @@
             </ng-template>
           </p-table>
         </div>
+        <div class="col-12 md:col-6">
+          <app-d3-log-scale [data]="data"></app-d3-log-scale>
+        </div>
       </div>
     </ng-container>
   </ng-template>
 
   <ng-template pTemplate="footer">
     <div class="grid">
-      <div class="col-12 text-right">
+      <div class="col-12 text-center">
         <button type="button" label="Calculate" pButton title="Calculate" [disabled]="form.invalid" (click)="onClickCalculate()" class="p-button-outlined p-button-info"></button>
       </div>
     </div>

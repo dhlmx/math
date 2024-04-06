@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { KeyValue } from '@angular/common';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 // Services
@@ -18,6 +19,7 @@ export class IntegersComponent implements OnInit {
   integer = new Integer();
   integers: Integer[] = [];
   series = new Series();
+  data: KeyValue<string, number>[] = [];
 
   controls = {
     number: new FormControl(0, [Validators.required, Validators.min(1), Validators.max(this.maximalSafeNumber)]),
@@ -39,19 +41,6 @@ export class IntegersComponent implements OnInit {
 
   constructor(public appService: AppService) {
   }
-
-  // ngDoCheck(): void {
-  //   if (this.appService.process.processingMode) {
-  //     console.log('Processing...');
-
-  //     if (this.integer.divisors.length > 0) {
-  //       console.log('Checking->STOP...');
-  //       // this.appService.process.stop();
-  //     }
-  //   } else {
-  //     console.log('IDLE...');
-  //   }
-  // }
 
   ngOnInit(): void {
     this.appService.process.start('Loading...');
@@ -87,6 +76,7 @@ export class IntegersComponent implements OnInit {
       this.integer = new Integer(this.controls.number.value!);
       this.integer.init();
       this.integers = [this.integer];
+      this.data = this.integer.divisorsMap;
       this.form.reset();
       this.appService.process.stop();
     }, 200);
