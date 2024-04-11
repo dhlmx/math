@@ -2,7 +2,9 @@ import { ICombination } from '../interfaces/icombination';
 import { Combination } from './combination';
 
 export class CombinationsGroup {
+
   combinations: Combination[] = [];
+  total = 0;
 
   constructor(combinations?: ICombination[]) {
     if (combinations) {
@@ -10,13 +12,13 @@ export class CombinationsGroup {
     }
   }
 
-  get calculation(): number {
-    let combinations = 1;
+  calculation = (): number => {
+    this.total = 1;
 
     this.combinations.forEach(combination => {
-      combinations *= combination.calculation;
+      this.total *= combination.calculate();
     });
 
-    return combinations;
+    return this.total;
   }
 }

@@ -32,7 +32,7 @@ export class CombinationByGroup {
     let combinations = 1;
 
     this.combinations.forEach(combination => {
-      combinations *= combination.calculation;
+      combinations *= combination.calculate();
     });
 
     return this.excludeArrangements ? combinations / factorial(this.groups.length) : combinations;

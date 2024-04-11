@@ -1,5 +1,8 @@
+import { KeyValue } from '@angular/common';
 import { IChild } from '../../core/interfaces/d3/ichild';
 import { ITecnology } from '../interfaces/d3/itecnology';
+import { ISelect } from '../interfaces/iselect';
+import { IOption } from '../interfaces/ioption';
 
 export const ADELA = 'Adela',
   ADELA_ID = 'Ad',
@@ -599,7 +602,30 @@ FLARE_DATA = {
       ]
     }
   ]
-};
+},
+BOOKS: ISelect[] = [
+  { label: 'Matemáticas naturales', value: 'MN', inactive: false },
+  { label: 'Algebra superior', value: 'AS', inactive: false }
+],
+PROBLEMS: ISelect[] = [
+  { value: 'MN-01', label: '¿Cuántas palabras de tres letras se pueden formar si se dispone de un alfabeto con dos letras: a y b?', inactive: false },
+  { value: 'MN-02', label: '¿Cuántos números enteros no negativos tienen 3 o menos dígitos? Nota: inclúyase el 0.', inactive: false },
+  { value: 'MN-03', label: '¿Cuántas placas de carros hay si las placas se forman utilizando primero 3 letras y luego 2 dígitos?', inactive: false },
+  { value: 'MN-04', label: '¿Cuántas "palabras" de longitud n se pueden formar usando el "alfabeto" {0, 1}?', inactive: false },
+  { value: 'MN-05', label: 'De un grupo de 4 personas: A, B, C y D, se va a elegir un presidente y un secretario. ¿Cuántas posibilidades hay?', inactive: false },
+  { value: 'MN-06', label: '¿De cuántas formas se pueden sentar 5 personas en 5 sillas numeradas?', inactive: false },
+  { value: 'MN-07', label: '¿Cuántos números de tres cifras distintas hay?', inactive: false },
+  { value: 'MN-08', label: 'De un grupo de 4 personas: A, B, C y D, se va a elegir dos. ¿Cuántas posibilidades hay?', inactive: false },
+  { value: 'MN-09', label: 'Determinar las distintas formas de ordenar los números 1, 2, 3 y 4.', inactive: false },
+  /*
+  { value: '', label: '', inactive : false },
+  { value: '', label: '', inactive : false },
+  { value: '', label: '', inactive : false },
+  { value: '', label: '', inactive : false },
+  { value: '', label: '', inactive : false },
+  { value: '', label: '', inactive : false },
+  */
+];
 
 export const getColor = (color: string): string => {
   switch (color) {

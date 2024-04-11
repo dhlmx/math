@@ -3,32 +3,142 @@
   [message]="appService.process.message">
 </app-message-modal>
 
+<p-panel>
+  <ng-template pTemplate="header">
+    <div><span class="pi pi-sync"></span>&nbsp;Análisis combinatorio</div>
+  </ng-template>
+
+  <ng-template pTemplate="icons">
+    <div>
+      <!--
+      <button type="button" pButton (click)="create()" title="Create expression" class="p-button-outlined p-button-info">
+        <em class="pi pi-plus-circle"></em>
+      </button>
+      -->
+      <button type="button" pButton title="Print list of expressions" class="p-button-outlined p-button-success">
+        <em class="pi pi-print"></em>
+      </button>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="body">
+    <form form="form">
+      <div class="grid bg-gray-900">
+        <div class="col-12">
+          <label for="problem"><span class="pi pi-sort-alt-slash"></span>&nbsp;Problemas</label>
+          <p-dropdown id="problem"
+            [options]="problems" [formControl]="controls.problem"
+            optionLabel="label" optionValue="value" optionDisabled="inactive"
+            (onChange)="onChangeProblem()"
+            placeholder="Selecciona un problema"
+            styleClass="w-full">
+          </p-dropdown>
+        </div>
+      </div>
+    </form>
+
+    <div class="grid bg-gray-900" *ngIf="form.valid">
+      <div class="col-12 md:col-6">
+        <p class="title">Planteamiento</p>
+        <p>{{ problem.label }}</p>
+        <ng-container *ngIf="problem.value.startsWith('MN')">
+          <p><span class="subtitle">Fuente:</span>
+            <br /><span class="cursive">Combinatoria.</span>
+            <br />García, Luis Miguel, Velázquez; Pérez, María Luisa, Seguí; y Raggi, Miguel, Pérez.<span class="cursive">&nbsp;Matemáticas naturales.</span>
+            <br />Pps. 59-65. Universidad Nacional Autónoma de México, 2017.
+          </p>
+        </ng-container>
+        <ng-container *ngIf="problem.value.startsWith('AS')">
+          <p><span class="subtitle">Fuente:</span>
+            <br /><span class="cursive">Análisis combinatorio.</span>
+            <br />Hall, M. A., H. S., and Knight, B. A., S. R., <span class="cursive">Álgebra Superior.</span>
+            <br />Pps. 137-158. Editorial UTEHA, S. A. de C. V., 1982.
+          </p>
+        </ng-container>
+      </div>
+
+      <!-- Soluciones -->
+      <div class="col-12 md:col-6">
+        <p class="title">Solución</p>
+
+        <ng-container *ngIf="problem.value==='MN-01'">
+          <p>La solución "manual" consistiría en contar las combinaciones del tipo: aaa, aab, aba, baa, bab, bbb, ...</p>
+          <p>Las letras del alfabeto podrían repetirse en cada palabra, ya que no se pide ningún tipo de exclusión.</p>
+          <p>Por lo tanto, el conteo equivaldría al número de letras del alfabeto (2) elevadas al número de repeticiones (3), es decir, 2<sup>3</sup>.</p>
+          <p>Realizando el cálculo matemático obtendríamos: {{ variation.calculate() }}</p>
+        </ng-container>
+        <ng-container *ngIf="problem.value==='MN-02'">
+          <p>La solución "manual" consistiría en contar las combinaciones del tipo: 000, 001, 002, 003, 004, 005, ..., 999</p>
+          <p>Los números podrían repetirse en cada "palabra", ya que no se pide ningún tipo de exclusión.</p>
+          <p>Por lo tanto, el conteo equivaldría a la cantidad de números del alfabeto (10) elevadas al número de repeticiones (3), es decir, 10<sup>3</sup>.</p>
+          <p>Realizando el cálculo matemático obtendríamos: {{ variation.calculate() }}</p>
+        </ng-container>
+        <ng-container *ngIf="problem.value==='MN-03'">
+          <p>La solución "manual" consistiría en contar las combinaciones del tipo: AAA00, AAA01, AAA02, ..., ZZZ99</p>
+          <p>Las letras y los números podrían repetirse en cada placa, ya que no se pide ningún tipo de exclusión.</p>
+          <p>Por lo tanto, el conteo equivaldría a la cantidad de letras [ABCDEFGHIJKLMNÑOPQRSTUVWXYZ] del alfabeto (27) elevada al número de repeticiones (3) multiplicadas por la cantidad de números (10) elevadas al número de repeticiones (2), es decir, (27<sup>3</sup>) * (10<sup>2</sup>).</p>
+          <p>Realizando el cálculo matemático obtendríamos: {{ variation.calculate() }}</p>
+        </ng-container>
+        <ng-container *ngIf="problem.value==='MN-04'">
+          <p>Revísense los problemas previos, ya que a partir de ellos podemos deducir que la solución está dada por el número de letras del alfabeto elevado al número de repeticiones, en este caso, n.</p>
+          <p>Por lo tanto, la solución es en este caso: 2<sup>n</sup>, donde n es el número de repeticiones, es decir, el largo de la palabra.</p>
+        </ng-container>
+
+        <p-accordion *ngIf="variation.calculate() > 0 && blobData.size > 0"  [activeIndex]="0">
+          <p-accordionTab header="Details" [selected]="false">
+            <a [href]="fileURL" download="resultados.json">
+              Descargar resultados [{{blobData.size > 1048576 ? round(blobData.size / 1048576) : round(blobData.size / 1024) }} {{blobData.size > 1000000 ? 'MB' : 'KB'}} | {{blobData.type}}]
+            </a>
+
+            <ng-container *ngIf="variation.calculate() <= 1000;">
+              <table>
+                <thead>
+                  <tr>
+                    <td>No.</td>
+                    <td>Combinación</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let combination of variation.list(false); let i=index;">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ combination }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </ng-container>
+          </p-accordionTab>
+        </p-accordion>
+
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <div class="grid">
+      <!-- <div class="col-12 text-center">
+        <button type="button" label="Calculate" pButton title="Calculate" [disabled]="form.invalid" (click)="onClickCalculate()" class="p-button-outlined p-button-info"></button>
+      </div> -->
+    </div>
+  </ng-template>
+</p-panel>
+
+<!--
 <h4>Matemáticas Naturales</h4>
-<p>Words (Variations) of 3 from 2 Chars: {{ wordsOfThreeFromFourChars.calculation }}<br /><br />
-  <ng-container *ngFor="let combination of wordsOfThreeFromFourChars.list(false)">
-    <span>{{ combination }}</span><br />
+
+<p>Plates of two chars and 1 digit: {{ variationOfPlates.calculate() }}<br /><br />
+   <ng-container *ngFor="let variation of variationOfPlates.list(true)">
+    <span>{{ variation }}</span><br />
   </ng-container>
 </p>
 
-<p>Numbers of 3 from 10 Digits: {{ combinationOfThreeFromTenDigits.calculation }}<br /><br />
-  <!-- <ng-container *ngFor="let combination of combinationOfThreeFromTenDigits.list(true)">
-    <span>{{ combination }}</span><br />
-  </ng-container> -->
-</p>
-
-<p>Plates of two chars and 1 digit: {{ variationOfPlates.calculation }}<br /><br />
-  <!-- <ng-container *ngFor="let variation of variationOfPlates.list(true)">
-    <span>{{ variation }}</span><br />
-  </ng-container> -->
-</p>
-
-<p>President and vicepresident of four persons: {{ combinationOfPresidenAndVicepresidentFromFourPersons.calculation }}<br /><br />
+<p>President and vicepresident of four persons: {{ combination.calculate() }}<br /><br />
   <ng-container *ngFor="let combination of combinationOfPresidenAndVicepresidentFromFourPersons.list(true)">
     <span>{{ combination }}</span><br />
   </ng-container>
 </p>
+-->
 
-<p>Combinations of 5 Chairs: {{ combinationOfFiveChairs.calculation }}<br /><br />
+<!-- <p>Combinations of 5 Chairs: {{ combinationOfFiveChairs.calculation }}<br /><br />
   <ng-container *ngFor="let combination of combinationOfFiveChairs.list(true)">
     <span>{{ combination }}</span><br />
   </ng-container>
@@ -51,15 +161,6 @@
     <span>{{ permutation }}</span><br />
   </ng-container>
 </p>
-
-
-
-
-
-
-
-
-
 
 <p>Variation of 2 from 4 Chars: {{ variationOfTwoOfFourChars.calculation }}<br /><br />
   <ng-container *ngFor="let combination of variationOfTwoOfFourChars.list(false)">
@@ -98,9 +199,9 @@
 </p>
 
 <p>Variation of 6 from 9 Digits: {{ combinationOfSixFromNineDigits.calculation }}<br /><br />
-  <!-- <ng-container *ngFor="let combination of combinationOfSixFromNineDigits.list(true)">
+  <ng-container *ngFor="let combination of combinationOfSixFromNineDigits.list(true)">
     <span>{{ combination }}</span><br />
-  </ng-container> -->
+  </ng-container>
 </p>
 
 <p>Combination Group of 5 from 12 Books: {{ groupsOfOneAndFourFromTwelveBooks.calculation }}<br /><br />
@@ -122,9 +223,9 @@
 <p>Combination Group of 5 from 15 Soldats: {{ groupsOfFiveFromFiveteenMens.calculation }}<br /><br />
   <ng-container *ngFor="let combination of groupsOfFiveFromFiveteenMens.combinations">
     <p>calculation: {{ combination.calculation }}</p>
-    <!-- <ng-container *ngFor="let c of combination.list(true)">
+    <ng-container *ngFor="let c of combination.list(true)">
       <span>{{ c }}</span><br />
-    </ng-container> -->
+    </ng-container>
   </ng-container>
 </p>
 
@@ -146,7 +247,7 @@
       </ng-container>
     </ng-container>
   </ng-container>
-</p>
+</p> -->
 
 <!--
   <p>Combination of Numbers: {{ combinationOfNumbers.calculation }}<br /><br />

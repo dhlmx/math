@@ -9,33 +9,42 @@ export class Combination {
   length = 0;
   excludeArrangements = false;
 
+  private total = 0;
+  private combinations: string[][] = [];
+
   constructor(source?: ICombination) {
     if (source) {
       this.elements = source.elements;
       this.length = source.length;
       this.excludeArrangements = source.excludeArrangements;
     }
+
+    this.total = 0;
+    this.combinations = [];
   }
 
-  get calculation(): number {
+  calculate = (): number => {
+    return this.total;
+  }
+
+  private calculation(): void {
     if (this.excludeArrangements) {
-      return factorial(this.elements.length) / (factorial(this.length) * factorial(this.elements.length - this.length));
+      this.total = factorial(this.elements.length) / (factorial(this.length) * factorial(this.elements.length - this.length));
+      return;
     }
 
     // return factorial(this.elements.length) / factorial(this.elements.length - this.length);
 
-    let iterator = this.elements.length,
-        total = 1;
+    let iterator = this.elements.length;
+    this.total = 1;
 
     while (iterator > (this.elements.length - this.length)) {
-      total *= iterator;
+      this.total *= iterator;
       iterator--;
     }
-
-    return total;
   }
 
-  list = (sort: boolean): string[][] => {
+  private combine = (): void => {
     let series = transformToMultipleArray(this.elements),
         iterator = 1;
 
@@ -60,6 +69,15 @@ export class Combination {
       iterator++;
     }
 
-    return sort ? sortMultipleArrayOfWords(series, this.excludeArrangements) : series;
+    this.combinations = series;
+  }
+
+  init = (): void => {
+    this.calculation();
+    this.combine();
+  }
+
+  public list = (sort: boolean): string[][] => {
+    return sort ? sortMultipleArrayOfWords(this.combinations, this.excludeArrangements) : this.combinations;
   }
 }

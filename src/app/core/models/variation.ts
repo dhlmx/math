@@ -1,28 +1,35 @@
 import { transformToMultipleArray } from "../services/utilities/array.service";
 import { sortMultipleArrayOfWords } from "../services/utilities/sort.service";
 
-export class Variation
- {
+export class Variation {
 
   series: string[][] = [];
+
+  private total = 0;
+  private variations: string[][] = [];
 
   constructor(series?: string[][]) {
     if (series) {
       this.series = series;
     }
+
+    this.total = 0;
+    this.variations = [];
   }
 
-  get calculation(): number {
-    let total = 1;
+  calculate = (): number => {
+    return this.total;
+  }
+
+  private calculation = (): void => {
+    this.total = 1;
 
     this.series.forEach(serie => {
-      total = total * serie.length;
+      this.total = this.total * serie.length;
     });
-
-    return total;
   }
 
-  list = (sort: boolean): string[][] => {
+  private combine = (): void => {
     let tmpSeries: string[][] = [];
 
     for (const serie of this.series) {
@@ -41,6 +48,15 @@ export class Variation
       }
     }
 
-    return sort ? sortMultipleArrayOfWords(tmpSeries, false) : tmpSeries;
+    this.variations = tmpSeries;
+  }
+
+  init = (): void => {
+    this.calculation();
+    this.combine();
+  }
+
+  list = (sort: boolean): string[][] => {
+    return sort ? sortMultipleArrayOfWords(this.variations, false) : this.variations;
   }
 }
