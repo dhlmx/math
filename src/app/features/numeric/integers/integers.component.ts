@@ -8,6 +8,7 @@ import { AppService } from 'src/app/core/services/utilities/app.service';
 // Models
 import { Integer } from '../../../core/models/integer';
 import { Series } from '../../../core/models/series';
+import { PdfService } from 'src/app/core/services/pdf.service';
 
 @Component({
   selector: 'app-integers',
@@ -39,7 +40,10 @@ export class IntegersComponent implements OnInit {
 
   form = new FormGroup({ ...this.controls });
 
-  constructor(public appService: AppService) {
+  constructor(
+    public appService: AppService,
+    public pdfService: PdfService
+  ) {
   }
 
   ngOnInit(): void {
@@ -81,4 +85,21 @@ export class IntegersComponent implements OnInit {
       this.appService.process.stop();
     }, 200);
   }
+
+  onClickPrint = (): void => {
+    this.appService.process.start('Printing...');
+
+    this.pdfService.exportPDF('htmlContent', 'resultados').subscribe({
+      next: (status) => {
+        console.info('exportPDF', status);
+      },
+      error: (e) => {
+        console.info('exportPDF:ERROR', e);
+      },
+      complete: () => {
+        this.appService.process.stop();
+      }
+    });
+  }
+
 }

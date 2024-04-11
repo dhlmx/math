@@ -3,7 +3,7 @@
   [message]="appService.process.message">
 </app-message-modal>
 
-<p-panel>
+<p-panel id="htmlContent" #htmlContent>
   <ng-template pTemplate="header">
     <div><span class="pi pi-share-alt"></span>&nbsp;Graphs</div>
   </ng-template>
@@ -15,7 +15,7 @@
         <em class="pi pi-plus-circle"></em>
       </button>
       -->
-      <button type="button" pButton title="Print list of expressions" class="p-button-outlined p-button-success">
+      <button type="button" pButton (click)="onClickPrint()" title="Print list of expressions" class="p-button-outlined p-button-success">
         <em class="pi pi-print"></em>
       </button>
     </div>

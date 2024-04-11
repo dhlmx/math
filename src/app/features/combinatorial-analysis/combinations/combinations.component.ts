@@ -18,6 +18,7 @@ import { IOption } from 'src/app/core/interfaces/ioption';
 import { DomSanitizer } from '@angular/platform-browser';
 import { JsonPipe } from '@angular/common';
 import { Permutation } from 'src/app/core/models/permutation';
+import { PdfService } from 'src/app/core/services/pdf.service';
 
 @Component({
   selector: 'app-combinations',
@@ -78,6 +79,7 @@ export class CombinationsComponent implements OnInit {
 
   constructor(
     public appService: AppService,
+    public pdfService: PdfService,
     private sanitizer: DomSanitizer,
   ) {}
 
@@ -127,6 +129,23 @@ export class CombinationsComponent implements OnInit {
         break;
     }
   }
+
+  onClickPrint = (): void => {
+    this.appService.process.start('Printing...');
+
+    this.pdfService.exportPDF('htmlContent', 'resultados').subscribe({
+      next: (status) => {
+        console.info('exportPDF', status);
+      },
+      error: (e) => {
+        console.info('exportPDF:ERROR', e);
+      },
+      complete: () => {
+        this.appService.process.stop();
+      }
+    });
+  }
+
 
   resolveAS01 = (): void => {
     this.wordsOfThreeFromFourChars = new Variation([

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { GuestCodeEnum, GuestEnum } from '../../../core/enums/guest.enum';
 import { Integer } from '../../../core/models/integer';
 import { Apex } from '../../../core/models/apex';
@@ -27,6 +27,7 @@ import { IChild } from 'src/app/core/interfaces/d3/ichild';
 import { AppService } from 'src/app/core/services/utilities/app.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ISelect } from 'src/app/core/interfaces/iselect';
+import { PdfService } from 'src/app/core/services/pdf.service';
 
 const APEXES: Apex[] = [
   new Apex({ id: 1, alias: CONDESA_ID, name: CONDESA, blackList: [CONDE_MAYOR_ID, CONDE_MENOR_ID] }),
@@ -60,6 +61,8 @@ const APEXES: Apex[] = [
 })
 export class ColorComponent implements OnInit {
 
+  @ViewChild('htmlContent', { static: false }) htmlContent: ElementRef;
+
   graph = new Graph();
   calculations: ISelect[] = [
     {
@@ -85,7 +88,13 @@ export class ColorComponent implements OnInit {
   options: IOptionsXY = { width: 800, height: 600 };
   forcesGraph = new ForceD3([], [], { width: 400, height: 320});
 
-  constructor(public appService: AppService) {}
+  constructor(
+    public appService: AppService,
+    public pdfService: PdfService,
+    public elementRef: ElementRef
+  ) {
+    this.htmlContent = elementRef.nativeElement;
+  }
 
   ngOnInit(): void {
     this.appService.process.start('Loading...');
@@ -181,6 +190,22 @@ export class ColorComponent implements OnInit {
 
       this.appService.process.stop();
     }, 1000);
+  }
+
+  onClickPrint = (): void => {
+    this.appService.process.start('Printing...');
+
+    this.pdfService.exportPDF('htmlContent', 'resultados').subscribe({
+      next: (status) => {
+        console.info('exportPDF', status);
+      },
+      error: (e) => {
+        console.info('exportPDF:ERROR', e);
+      },
+      complete: () => {
+        this.appService.process.stop();
+      }
+    });
   }
 
   updateTreeData = (): void => {

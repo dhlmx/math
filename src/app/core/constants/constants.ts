@@ -1,8 +1,6 @@
-import { KeyValue } from '@angular/common';
 import { IChild } from '../../core/interfaces/d3/ichild';
 import { ITecnology } from '../interfaces/d3/itecnology';
 import { ISelect } from '../interfaces/iselect';
-import { IOption } from '../interfaces/ioption';
 
 export const ADELA = 'Adela',
   ADELA_ID = 'Ad',
