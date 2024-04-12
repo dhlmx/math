@@ -1,19 +1,24 @@
 import { Injectable } from '@angular/core';
-import * as jsPDF from 'jspdf';
+import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
 import { Observable, from, map, of } from 'rxjs';
+
+// Interfaces && Models
 import { IJsPdfOptions } from '../interfaces/jsPDF/IJsPdfOptions';
+
+// Enums && Constants
 import { jsPDFFormatEnum, jsPDFOrientationEnum, jsPDFUnitEnum } from '../enums/jsPDF/jsPDF.enum';
-import { IDimension } from '../interfaces/jsPDF/IDimensions';
 import { LETTER_HEIGHT_MM, LETTER_WIDTH_MM } from '../constants/paper';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class PdfService {
 
+  date = new Date();
   htmlContent: any;
-  pdf: any;
+  pdf: jsPDF = new jsPDF();
   canvasData = '';
 
   margin = {
@@ -22,6 +27,7 @@ export class PdfService {
     bottom: 10,
     left: 10
   };
+
   height = 0;
   width = 0;
   innerHeight = 0;
@@ -44,13 +50,14 @@ export class PdfService {
 
     return from(html2canvas(this.htmlContent)).pipe(
       map(canvas => {
-        this.getImageSize(canvas.width, canvas.height);
         this.canvasData = canvas.toDataURL('image/png');
-        return new jsPDF.jsPDF(this.pdfOptions);
+        this.getImageSize(canvas.width, canvas.height);
+        return new jsPDF(this.pdfOptions);
       }),
       map(pdf => {
         this.pdf = pdf;
         this.pdf.addImage(this.canvasData, 'PNG', this.margin.left, this.margin.top, this.innerWidth, this.innerHeight);
+        this.pdf.text(`Math® v1.0.0 | ${this.date.getUTCFullYear()}`, 10, 8);
         this.pdf.save(`${fileName}.pdf`);
         return { status: 'OK' };
       })
