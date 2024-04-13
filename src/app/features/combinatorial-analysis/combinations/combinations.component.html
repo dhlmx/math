@@ -10,11 +10,6 @@
 
   <ng-template pTemplate="icons">
     <div>
-      <!--
-      <button type="button" pButton (click)="create()" title="Create expression" class="p-button-outlined p-button-info">
-        <em class="pi pi-plus-circle"></em>
-      </button>
-      -->
       <button type="button" pButton (click)="onClickPrint()" title="Print list of expressions" class="p-button-outlined p-button-success">
         <em class="pi pi-print"></em>
       </button>
@@ -83,9 +78,48 @@
           <p>Revísense los problemas previos, ya que a partir de ellos podemos deducir que la solución está dada por el número de letras del alfabeto elevado al número de repeticiones, en este caso, n.</p>
           <p>Por lo tanto, la solución es en este caso: 2<sup>n</sup>, donde n es el número de repeticiones, es decir, el largo de la palabra.</p>
         </ng-container>
+        <ng-container *ngIf="problem.value==='MN-05'">
+          <p>En este tipo de problemas podemos ver lo importante que es identificar el tipo de problema al que nos enfrentamos: variaciones, permutaciones, combinaciones, etc.</p>
+          <p>En este caso se trata de combinaciones. Una combinación en una variación que se diferencia de otra porque al comparar sus elementos existirá al menos uno diferente, o porque, si son los mismos elementos, al menos uno de ellos estará colocado en una diferente posición con respecto a la otra combinación.</p>
+          <p>Por ejemplo, si A es presidente y C secretario, entonces C y A pueden ser una combinación distinta si se invierten los papeles de presidente y secretario, es decir AC será diferente de CA. Ambas serán combinaciones válidas.</p>
+          <p>Nótese que al seleccionar el presidente, restarán tres personas. Entonces, por cada presidente, existen tres opciones diferentes de secretario. Finalmente, al seleccionar al secretario, restarán dos personas, que ya no entrarán en el cálculo de las combinaciones.</p>
+          <p>El algoritmo de combinaciones nos permite ordenar los resultados finales. Eso nos facilita ver lo explicado anteriormente.</p>
+          <p>Realizando el cálculo matemático obtenemos: {{ combination.calculate() }}</p>
+        </ng-container>
+        <ng-container *ngIf="problem.value==='MN-06'">
+          <p>En este tipo de problemas podemos ver lo importante que es identificar el tipo de problema al que nos enfrentamos: variaciones, permutaciones, combinaciones, etc.</p>
+          <p>En este caso se trata de combinaciones. Una combinación en una variación que se diferencia de otra porque al comparar sus elementos existirá al menos uno diferente, o porque, si son los mismos elementos, al menos uno de ellos estará colocado en una diferente posición con respecto a la otra combinación.</p>
+          <p>Realizando el cálculo matemático obtenemos: {{ combination.calculate() }}</p>
+        </ng-container>
+        <ng-container *ngIf="problem.value==='MN-07'">
+          <p>En este tipo de problemas podemos ver lo importante que es identificar el tipo de problema al que nos enfrentamos: variaciones, permutaciones, combinaciones, etc.</p>
+          <p>En este caso se trata de combinaciones. Una combinación en una variación que se diferencia de otra porque al comparar sus elementos existirá al menos uno diferente, o porque, si son los mismos elementos, al menos uno de ellos estará colocado en una diferente posición con respecto a la otra combinación.</p>
+          <p>Realizando el cálculo matemático obtenemos: {{ combination.calculate() }}</p>
+        </ng-container>
+        <ng-container *ngIf="problem.value==='MN-08'">
+          <p>En este tipo de problemas podemos ver lo importante que es identificar el tipo de problema al que nos enfrentamos: variaciones, permutaciones, combinaciones, etc.</p>
+          <p>En este caso se trata, como en el problema 05, de combinaciones, pero hay una diferencia importante. En dicho problema, los elementos seleccionados jugaban el rol de presidente o secretario, y por lo tanto, dado que cada elemento podía jugar uno u otro rol, no podían excluirse entre sí. Ahora no está definido ningún rol, entonces AB = BA, ya que no tienen un rol definido. Por consiguiente se autoexcluyen. Eso reducirá la cantidad de combinaciones.</p>
+          <p>Realizando el cálculo matemático obtenemos: {{ combination.calculate() }}</p>
+        </ng-container>
+        <ng-container *ngIf="problem.value==='MN-09'">
+          <p>Tratemos de identificar el tipo de problema al que nos enfrentamos: ¿variaciones, combinaciones, permutaciones?</p>
+          <p>-Los ordenamientos incluirán la totalidad de los elementos.</p>
+          <p>-En este caso, cada elemento, como número, jugará un rol específico como unidad, decena, centena, millar.</p>
+          <p>Hablamos de combinaciones, pero cuando se abarca la totalidad de los elementos se denominan permutaciones.</p>
+          <p>A diferencia de las simples variaciones, entre permutaciones lo que varía es la posición de los elementos. En una variación, en cambio, puede aparecer repetido hasta "n" veces un mismo elemento, donde "n" es el número de elementos por ordenar.</p>
+          <p>Realizando el cálculo matemático obtenemos: {{ permutation.calculate() }}</p>
+        </ng-container>
+        <ng-container *ngIf="problem.value==='MN-10'">
+          <p>Tratemos de identificar el tipo de problema al que nos enfrentamos: ¿variaciones, combinaciones, permutaciones?</p>
+          <p>-Los ordenamientos incluirán la totalidad de los elementos.</p>
+          <p>-En este caso, cada elemento, como número, jugará un rol específico como unidad, decena, centena, millar.</p>
+          <p>Hablamos de combinaciones, pero cuando se abarca la totalidad de los elementos se denominan permutaciones.</p>
+          <p>A diferencia de las simples variaciones, entre permutaciones lo que varía es la posición de los elementos. En una variación, en cambio, puede aparecer repetido hasta "n" veces un mismo elemento, donde "n" es el número de elementos por ordenar.</p>
+          <p>Realizando el cálculo matemático obtenemos: {{ combination.calculate() }}</p>
+        </ng-container>
 
         <p-accordion *ngIf="variation.calculate() > 0 && blobData.size > 0"  [activeIndex]="0">
-          <p-accordionTab header="Details" [selected]="false">
+          <p-accordionTab header="Detalles" [selected]="false">
             <a [href]="fileURL" download="resultados.json">
               Descargar resultados [{{blobData.size > 1048576 ? round(blobData.size / 1048576) : round(blobData.size / 1024) }} {{blobData.size > 1000000 ? 'MB' : 'KB'}} | {{blobData.type}}]
             </a>
@@ -100,6 +134,56 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let combination of variation.list(false); let i=index;">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ combination }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </ng-container>
+          </p-accordionTab>
+        </p-accordion>
+
+        <p-accordion *ngIf="combination.calculate() > 0 && blobData.size > 0"  [activeIndex]="1">
+          <p-accordionTab header="Detalles" [selected]="false">
+            <a [href]="fileURL" download="resultados.json">
+              Descargar resultados [{{blobData.size > 1048576 ? round(blobData.size / 1048576) : round(blobData.size / 1024) }} {{blobData.size > 1000000 ? 'MB' : 'KB'}} | {{blobData.type}}]
+            </a>
+
+            <ng-container *ngIf="variation.calculate() <= 1000;">
+              <table>
+                <thead>
+                  <tr>
+                    <td>No.</td>
+                    <td>Combinación</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let combination of combination.list(true); let i=index;">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ combination }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </ng-container>
+          </p-accordionTab>
+        </p-accordion>
+
+        <p-accordion *ngIf="permutation.calculate() > 0 && blobData.size > 0"  [activeIndex]="2">
+          <p-accordionTab header="Detalles" [selected]="false">
+            <a [href]="fileURL" download="resultados.json">
+              Descargar resultados [{{blobData.size > 1048576 ? round(blobData.size / 1048576) : round(blobData.size / 1024) }} {{blobData.size > 1000000 ? 'MB' : 'KB'}} | {{blobData.type}}]
+            </a>
+
+            <ng-container *ngIf="permutation.calculate() <= 1000;">
+              <table>
+                <thead>
+                  <tr>
+                    <td>No.</td>
+                    <td>Permuta</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let combination of permutation.list(); let i=index;">
                     <td>{{ i + 1 }}</td>
                     <td>{{ combination }}</td>
                   </tr>

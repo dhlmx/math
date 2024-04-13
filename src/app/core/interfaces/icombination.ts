@@ -1,5 +1,5 @@
 export interface ICombination {
-  elements: string[],
+  elements: any[],
   length: number,
   excludeArrangements: boolean
 }

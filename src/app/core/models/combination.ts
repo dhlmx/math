@@ -5,12 +5,12 @@ import { factorial } from './calculate';
 
 export class Combination {
 
-  elements: string[] = [];
+  elements: any[] = [];
   length = 0;
   excludeArrangements = false;
 
   private total = 0;
-  private combinations: string[][] = [];
+  private combinations: any[][] = [];
 
   constructor(source?: ICombination) {
     if (source) {
@@ -49,7 +49,7 @@ export class Combination {
         iterator = 1;
 
     while (iterator < this.length) {
-      let innerSeries: string[][] = [];
+      let innerSeries: any[][] = [];
 
       for (const element of this.elements) {
         series.forEach(subSerie => {
@@ -75,9 +75,11 @@ export class Combination {
   init = (): void => {
     this.calculation();
     this.combine();
+
+    console.info('Combination', this.calculate(), this.list(false));
   }
 
-  public list = (sort: boolean): string[][] => {
+  public list = (sort: boolean): any[][] => {
     return sort ? sortMultipleArrayOfWords(this.combinations, this.excludeArrangements) : this.combinations;
   }
 }

@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
+import { JsonPipe } from '@angular/common';
 
 // Services && Pipes
 import { AppService } from '../../../core/services/utilities/app.service';
+import { PdfService } from '../../../core/services/pdf.service';
 
 // Interfaces && Models
 import { ISelect } from '../../../core/interfaces/iselect';
@@ -10,15 +13,11 @@ import { Combination } from '../../../core/models/combination';
 import { CombinationByGroup } from '../../../core/models/combination-by-group';
 import { CombinationsGroup } from '../../../core/models/combinations-group';
 import { CombinationsGroups } from '../../../core/models/combinationsGroups';
+import { Permutation } from '../../../core/models/permutation';
 import { Variation } from '../../../core/models/variation';
 
 // Enums && Constants
 import { PROBLEMS } from '../../../core/constants/constants';
-import { IOption } from 'src/app/core/interfaces/ioption';
-import { DomSanitizer } from '@angular/platform-browser';
-import { JsonPipe } from '@angular/common';
-import { Permutation } from 'src/app/core/models/permutation';
-import { PdfService } from 'src/app/core/services/pdf.service';
 
 @Component({
   selector: 'app-combinations',
@@ -40,18 +39,9 @@ export class CombinationsComponent implements OnInit {
 
   variation = new Variation();
   combination = new Combination();
+  permutation = new Permutation();
   combinationByGroup = new CombinationByGroup();
   combinationGroups = new CombinationsGroups();
-
-  // Matemáticas naturales
-  wordsOfThreeFromFourChars = new Variation();
-  combinationOfThreeFromTenDigits = new Variation();
-  variationOfPlates = new Variation();
-  combinationOfPresidenAndVicepresidentFromFourPersons = new Combination();
-  combinationOfFiveChairs = new Combination();
-  combinationsOfThreeDigits = new Combination();
-  selectionOfTwoFromFourPersons = new Combination();
-  permutationsOfFourDigits = new Combination();
 
   // Algebra Superior
   variationOfTwoOfFourChars = new Combination();
@@ -102,32 +92,17 @@ export class CombinationsComponent implements OnInit {
   }
 
   onChangeProblem = (): void => {
-    this.problem = this.controls.problem.value
-      ? this.problems.find(p => p.value === this.controls.problem.value) ?? {} as ISelect
-      : {} as ISelect;
+    this.appService.process.start('Calculating...');
 
-    switch (this.problem.value) {
-      case 'AS-01':
-        this.resolveAS01();
-        break;
-      case 'AS-02':
-        this.resolveAS02();
-        break;
-      case 'AS-03':
-        this.resolveAS03();
-        break;
-      case 'MN-01':
-        this.resolveMN01();
-        break;
-      case 'MN-02':
-        this.resolveMN02();
-        break;
-      case 'MN-03':
-        this.resolveMN03();
-        break;
-      default:
-        break;
-    }
+    setTimeout(() => {
+      this.problem = this.controls.problem.value
+        ? this.problems.find(p => p.value === this.controls.problem.value) ?? {} as ISelect
+        : {} as ISelect;
+
+      this.reset();
+      this.resolve();
+      this.appService.process.stop();
+    }, 1000);
   }
 
   onClickPrint = (): void => {
@@ -146,141 +121,161 @@ export class CombinationsComponent implements OnInit {
     });
   }
 
+  private reset = (): void => {
+    this.variation = new Variation();
+    this.combination = new Combination();
+    this.permutation = new Permutation();
+    this.combinationByGroup = new CombinationByGroup();
+    this.combinationGroups = new CombinationsGroups();
+    this.resetJsonData();
+  }
 
   resolveAS01 = (): void => {
-    this.wordsOfThreeFromFourChars = new Variation([
-      ['a', 'b'], ['a', 'b'], ['a', 'b']
-    ]);
+    // this.wordsOfThreeFromFourChars = new Variation([
+    //   ['a', 'b'], ['a', 'b'], ['a', 'b']
+    // ]);
   }
 
   resolveAS02 = (): void => {
-    this.wordsOfThreeFromFourChars = new Variation([
-      ['a', 'b'], ['a', 'b'], ['a', 'b']
-    ]);
+    // this.wordsOfThreeFromFourChars = new Variation([
+    //   ['a', 'b'], ['a', 'b'], ['a', 'b']
+    // ]);
   }
 
   resolveAS03 = (): void => {
-    this.wordsOfThreeFromFourChars = new Variation([
-      ['a', 'b'], ['a', 'b'], ['a', 'b']
-    ]);
+    // this.wordsOfThreeFromFourChars = new Variation([
+    //   ['a', 'b'], ['a', 'b'], ['a', 'b']
+    // ]);
   }
   resolveAS04 = (): void => {
-    this.wordsOfThreeFromFourChars = new Variation([
-      ['a', 'b'], ['a', 'b'], ['a', 'b']
-    ]);
+    // this.wordsOfThreeFromFourChars = new Variation([
+    //   ['a', 'b'], ['a', 'b'], ['a', 'b']
+    // ]);
   }
 
   resolveAS05 = (): void => {
-    this.wordsOfThreeFromFourChars = new Variation([
-      ['a', 'b'], ['a', 'b'], ['a', 'b']
-    ]);
+    // this.wordsOfThreeFromFourChars = new Variation([
+    //   ['a', 'b'], ['a', 'b'], ['a', 'b']
+    // ]);
   }
 
-  resolveMN01 = (): void => {
-    this.appService.process.start('Calculating...');
+  resolve = (): void => {
+    switch (this.problem.value) {
+      case 'MN-01':
+        this.variation = new Variation([
+          ['a', 'b'], ['a', 'b'], ['a', 'b']
+        ]);
 
-    setTimeout(() => {
-      this.variation = new Variation([
-        ['a', 'b'], ['a', 'b'], ['a', 'b']
-      ]);
+        this.variation.init();
+        this.createJsonData(this.variation.calculate(), this.variation.list(false));
+        break;
+      case 'MN-02':
+        this.variation = new Variation([
+          ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+          ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+          ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        ]);
 
-      this.variation.init();
-      this.createJsonData(this.variation.calculate(), this.variation.list(false));
+        this.variation.init();
+        this.createJsonData(this.variation.calculate(), this.variation.list(false));
+        break;
+      case 'MN-03':
+        this.variation = new Variation([
+          ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+          ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+          ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+          ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
+          ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+        ]);
 
-      const permutation = new Permutation(['a','b','c','d']);
-      permutation.init();
-      console.info('Permutation', permutation.calculate());
+        this.variation.init();
+        this.createJsonData(this.variation.calculate(), this.variation.list(false));
+        break;
+      case 'MN-05':
+        this.combination = new Combination({
+          elements: ['A', 'B', 'C', 'D'],
+          length: 2,
+          excludeArrangements: false
+        });
 
-      this.appService.process.stop();
-    }, 1000);
-  }
+        this.combination.init();
+        this.createJsonData(this.combination.calculate(), this.combination.list(false));
+        break;
+      case 'MN-06':
+        this.combination = new Combination({
+          elements: ['S1', 'S2', 'S3', 'S4', 'S5'],
+          length: 5,
+          excludeArrangements: false
+        });
 
-  resolveMN02 = (): void => {
-    this.appService.process.start('Calculating...');
+        this.combination.init();
+        this.createJsonData(this.combination.calculate(), this.combination.list(false));
+        break;
+      case 'MN-07':
+        this.combination = new Combination({
+          elements: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
+          length: 3,
+          excludeArrangements: false
+        });
 
-    setTimeout(() => {
-      this.variation = new Variation([
-        ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
-        ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
-        ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-      ]);
+        this.combination.init();
+        this.createJsonData(this.combination.calculate(), this.combination.list(false));
+        break;
+      case 'MN-08':
+        this.combination = new Combination({
+          elements: ['A', 'B', 'C', 'D'],
+          length: 2,
+          excludeArrangements: true
+        });
 
-      this.variation.init();
-      this.createJsonData(this.variation.calculate(), this.variation.list(false));
-      this.appService.process.stop();
-    }, 1000);
-  }
+        this.combination.init();
+        this.createJsonData(this.combination.calculate(), this.combination.list(false));
+        break;
+      case 'MN-09':
+        this.permutation = new Permutation([1, 2, 3, 4]);
 
-  resolveMN03 = (): void => {
-    this.appService.process.start('Calculating...');
+        this.permutation.init();
+        this.createJsonData(this.permutation.calculate(), this.permutation.list());
+        break;
+      case 'MN-10':
+        this.combination = new Combination({
+          elements: ['A', 'B', 'C', 'D', 'E'],
+          length: 3,
+          excludeArrangements: true
+        });
 
-    setTimeout(() => {
-      this.variation = new Variation([
-        ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
-        ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
-        ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
-        ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
-        ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
-      ]);
-
-      this.variation.init();
-      this.createJsonData(this.variation.calculate(), this.variation.list(false));
-      this.appService.process.stop();
-    }, 1000);
-  }
-
-  resolveMN04 = (): void => {
-    this.appService.process.start('Calculating...');
-
-    setTimeout(() => {
-      this.variation = new Variation([]);
-
-      this.variation.init();
-      this.resetJsonData();
-      this.appService.process.stop();
-    }, 1000);
-  }
-
-  resolveMN05 = (): void => {
-    this.appService.process.start('Calculating...');
-
-    setTimeout(() => {
-      this.combination = new Combination({
-        elements: ['A', 'B', 'C', 'D'],
-        length: 2,
-        excludeArrangements: false
-      });
-
-      this.variation.init();
-      this.resetJsonData();
-      this.appService.process.stop();
-    }, 1000);
+        this.combination.init();
+        this.createJsonData(this.combination.calculate(), this.combination.list(false));
+        break;
+      default:
+        break;
+    }
   }
 
   resolveMN10 = (): void => {
-    this.wordsOfThreeFromFourChars = new Variation([
-      ['a', 'b'], ['a', 'b'], ['a', 'b']
-    ]);
+    // this.wordsOfThreeFromFourChars = new Variation([
+    //   ['a', 'b'], ['a', 'b'], ['a', 'b']
+    // ]);
 
-      // Matemáticas naturales
+    //   // Matemáticas naturales
 
 
 
-      this.combinationOfFiveChairs = new Combination(
-        { elements: ['S1', 'S2', 'S3', 'S4', 'S5'], length: 5, excludeArrangements: false }
-      );
+    //   this.combinationOfFiveChairs = new Combination(
+    //     { elements: ['S1', 'S2', 'S3', 'S4', 'S5'], length: 5, excludeArrangements: false }
+    //   );
 
-      this.combinationsOfThreeDigits = new Combination(
-        { elements: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], length: 3, excludeArrangements: false }
-      );
+    //   this.combinationsOfThreeDigits = new Combination(
+    //     { elements: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'], length: 3, excludeArrangements: false }
+    //   );
 
-      this.selectionOfTwoFromFourPersons = new Combination(
-        { elements: ['A', 'B', 'C', 'D'], length: 2, excludeArrangements: true }
-      );
+    //   this.selectionOfTwoFromFourPersons = new Combination(
+    //     { elements: ['A', 'B', 'C', 'D'], length: 2, excludeArrangements: true }
+    //   );
 
-      this.permutationsOfFourDigits = new Combination(
-        { elements: ['1', '2', '3', '4'], length: 4, excludeArrangements: false }
-      );
+    //   this.permutationsOfFourDigits = new Combination(
+    //     { elements: ['1', '2', '3', '4'], length: 4, excludeArrangements: false }
+    //   );
 
       // Algebra Superior
       this.variationOfTwoOfFourChars = new Combination(
