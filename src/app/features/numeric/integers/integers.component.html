@@ -94,8 +94,8 @@
               <tr>
                 <th id="value" pSortableColumn="value" class="width-20"><p-sortIcon field="value"></p-sortIcon>&nbsp;Número</th>
                 <th id="attributes" pSortableColumn="attributes" class="width-20"><p-sortIcon field="attributes"></p-sortIcon>&nbsp;Atributos</th>
-                <th id="divisors" class="width-20 text-center">Factores (Primos)</th>
-                <th id="others" class="width-40 text-center"></th>
+                <th id="divisors" class="width-20 text-center">Factores Primos</th>
+                <th id="others" class="width-40 text-center">Conjuntos de Factores Primos</th>
               </tr>
             </ng-template>
 
@@ -117,11 +117,15 @@
                   </ng-container>
                 </td>
                 <td>
-                  <p *ngFor="let divisor of integer.divisors" >
-                    {{divisor}}
+                  <p *ngFor="let primes of integer.primes" >
+                    {{primes}}
                   </p>
                 </td>
-                <td></td>
+                <td>
+                  <p *ngFor="let sets of integer.primesSet" >
+                    {{sets|set}}
+                  </p>
+                </td>
               </tr>
             </ng-template>
 

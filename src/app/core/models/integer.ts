@@ -1,17 +1,19 @@
 import { KeyValue } from '@angular/common';
-import { divisors, divisorsAsync, isDivisorOf, isEven, isMultipleOf, isOdd, isPrime, isRelativePrimeOf, maximalCommonDivisor } from '../services/utilities/numeric';
+import { divisors, isDivisorOf, isEven, isMultipleOf, isOdd, isPrime, isRelativePrimeOf, maximalCommonDivisor, primesSet } from '../services/utilities/numeric';
 
 export class Integer {
 
   value = 0;
-  divisors: number[] = [];
+  primes: number[] = [];
+  primesSet: number[][] = [];
   isEven = false;
   isOdd = false;
   isPrime = false;
 
   constructor(value?: number) {
     this.value = value ?? 0;
-    this.divisors = [];
+    this.primes = [];
+    this.primesSet = [];
     this.isEven = false;
     this.isOdd = false;
     this.isPrime = false;
@@ -20,18 +22,40 @@ export class Integer {
   get divisorsMap(): KeyValue<string, number>[] {
     const divMap: KeyValue<string, number>[] = [];
 
-    this.divisors.forEach((v, k) => {
+    this.primes.forEach((v, k) => {
       divMap.push({ key: `${k + 1}`, value: v });
     });
 
     return divMap;
   }
 
+  getPrimeSet = (): void => {
+    let isCompleted = false;
+
+    while (!isCompleted) {
+      const sets: number[] = [];
+      let total = 1;
+
+      this.primes.forEach((prime, index) => {
+        sets.push(prime);
+        total *= prime;
+
+        if (total === this.value) {
+          if (index === this.primes.length - 1) {
+            isCompleted = true;
+          }
+          return;
+        }
+      });
+    }
+  }
+
   init = (): void => {
-    this.divisors = divisors(this.value);
+    this.primes = divisors(this.value);
+    this.primesSet = primesSet(this.primes);
     this.isEven = isEven(this.value);
     this.isOdd = isOdd(this.value);
-    this.isPrime = isPrime(this.divisors);
+    this.isPrime = isPrime(this.primes);
   }
 
   isDivisorOf = (b: number): boolean => {
@@ -43,10 +67,10 @@ export class Integer {
   }
 
   isRelativePrimeOf = (b: number): boolean => {
-    return isRelativePrimeOf(this.divisors, b);
+    return isRelativePrimeOf(this.primes, b);
   }
 
   maximalCommonDivisorOf = (b: number): number => {
-    return maximalCommonDivisor(this.divisors, b);
+    return maximalCommonDivisor(this.primes, b);
   }
 }

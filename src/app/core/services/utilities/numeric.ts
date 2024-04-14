@@ -1,4 +1,4 @@
-import { Observable, of } from "rxjs";
+import { Observable, of } from 'rxjs';
 
 export const complement = (u: number[], a: number[]): number[] => {
   const x: number[] = [];
@@ -144,6 +144,52 @@ parseSet = (set: string[]): any[] => {
   });
 
   return setParsed;
+},
+
+primesSet = (divisors: number[]): number[][] => {
+  const prime = Math.max(...divisors);
+
+  if (divisors.length === 0 || divisors.length === 1 || prime ===1) {
+    return [];
+  }
+
+  if (divisors.length === 2) {
+    return [[1, prime], [prime, 1]];
+  }
+
+  const primes: number[][] = [];
+  let divs: number[] = [];
+
+  console.clear();
+
+  [...divisors].reverse().forEach(div => {
+    let quotient = prime / div,
+        remainder = prime % div;
+
+    if ((quotient === 1 || quotient === prime) && remainder === 0) {
+      primes.push([quotient, div]);
+    } else {
+      while (quotient !== 1) {
+        divs.push(div);
+
+        [...divisors].reverse().forEach(innerDiv => {
+          if (quotient > 1 && innerDiv <= quotient) {
+            let innerQuotient = quotient / innerDiv,
+                innerRemainder = quotient % innerDiv;
+
+            if (innerQuotient === 1 && innerRemainder === 0) {
+              divs.push(innerDiv)
+              primes.push(divs);
+              divs = [];
+              quotient = innerQuotient;
+            }
+          }
+        });
+      }
+    }
+  });
+
+  return primes;
 },
 
 union = (setA: any[], setB: any[]): any[] => {

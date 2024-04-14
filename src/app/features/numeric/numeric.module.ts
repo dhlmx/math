@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { CoreModule } from '../../core/core.module';
+import { SharedModule } from '../../core/modules/share/shared.module';
 import { NumericRoutingModule } from './numeric-routing.module';
 import { IntegersComponent } from './integers/integers.component';
-import { CoreModule } from 'src/app/core/core.module';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { CoreModule } from 'src/app/core/core.module';
   imports: [
     CommonModule,
     NumericRoutingModule,
-    CoreModule
+    CoreModule,
+    SharedModule
   ]
 })
 export class NumericModule { }
